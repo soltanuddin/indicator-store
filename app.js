@@ -5,14 +5,23 @@ const menu = $("menu");
 const links = $("links");
 
 if (menu && links) {
-  menu.onclick = () => {
+  menu.addEventListener("click", () => {
     links.classList.toggle("open");
-  };
+  });
+
+  links.querySelectorAll("a").forEach((link) => {
+    link.addEventListener("click", () => {
+      links.classList.remove("open");
+    });
+  });
 }
 
-// Buy Now buttons
+
+// Buy buttons
 document.querySelectorAll(".choose").forEach((button) => {
+
   button.addEventListener("click", () => {
+
     const plan = button.dataset.plan;
     const planSelect = $("plan");
     const orderSection = $("order");
@@ -23,18 +32,22 @@ document.querySelectorAll(".choose").forEach((button) => {
 
     if (orderSection) {
       orderSection.scrollIntoView({
-        behavior: "smooth",
-        block: "start"
+        behavior: "smooth"
       });
     }
+
   });
+
 });
 
-// Order form
+
+// Submit Order
 const orderForm = $("orderForm");
 
 if (orderForm) {
+
   orderForm.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
     const result = $("orderResult");
@@ -49,11 +62,14 @@ if (orderForm) {
       message: $("message").value.trim()
     };
 
-    if (result) {
-      result.innerHTML = `<div class="result">Submitting order...</div>`;
-    }
+    result.innerHTML = `
+      <div class="result">
+        Submitting order...
+      </div>
+    `;
 
     try {
+
       const response = await fetch("/api/orders", {
         method: "POST",
         headers: {
@@ -64,7 +80,7 @@ if (orderForm) {
 
       const text = await response.text();
 
-      let json;
+      let json = {};
 
       try {
         json = text ? JSON.parse(text) : {};
@@ -80,55 +96,62 @@ if (orderForm) {
         );
       }
 
-      if (result) {
-        result.innerHTML = `
-          <div class="result">
-            <b>Order submitted ✅</b><br>
-            Order ID:
-            <strong>${esc(json.order_id)}</strong><br>
-            Status:
-            <strong>${esc(json.status || "Pending")}</strong>
-          </div>
-        `;
-      }
+      result.innerHTML = `
+        <div class="result">
+          <b>Order submitted ✅</b><br><br>
+          Order ID:
+          <strong>${esc(json.order_id)}</strong>
+          <br>
+          Status:
+          <strong>${esc(json.status || "Pending")}</strong>
+        </div>
+      `;
 
       orderForm.reset();
 
     } catch (error) {
-      if (result) {
-        result.innerHTML = `
-          <div class="result">
-            <b>API Error ❌</b><br>
-            ${esc(error.message)}
-          </div>
-        `;
-      }
+
+      result.innerHTML = `
+        <div class="result">
+          <b>API Error ❌</b><br><br>
+          ${esc(error.message)}
+        </div>
+      `;
+
     }
+
   });
+
 }
+
 
 // Order status
 const statusForm = $("statusForm");
 
 if (statusForm) {
+
   statusForm.addEventListener("submit", async (e) => {
+
     e.preventDefault();
 
     const result = $("statusResult");
     const orderId = $("lookup").value.trim();
 
-    if (result) {
-      result.innerHTML = `<div class="result">Checking...</div>`;
-    }
+    result.innerHTML = `
+      <div class="result">
+        Checking order...
+      </div>
+    `;
 
     try {
+
       const response = await fetch(
         "/api/orders/" + encodeURIComponent(orderId)
       );
 
       const text = await response.text();
 
-      let json;
+      let json = {};
 
       try {
         json = text ? JSON.parse(text) : {};
@@ -144,32 +167,39 @@ if (statusForm) {
         );
       }
 
-      if (result) {
-        result.innerHTML = `
-          <div class="result">
-            <b>${esc(json.order_id)}</b><br>
-            Plan: ${esc(json.plan)}<br>
-            Status:
-            <strong>${esc(json.status)}</strong>
-          </div>
-        `;
-      }
+      result.innerHTML = `
+        <div class="result">
+          <b>Order Found ✅</b><br><br>
+          Order ID:
+          <strong>${esc(json.order_id)}</strong>
+          <br>
+          Plan:
+          ${esc(json.plan)}
+          <br>
+          Status:
+          <strong>${esc(json.status)}</strong>
+        </div>
+      `;
 
     } catch (error) {
-      if (result) {
-        result.innerHTML = `
-          <div class="result">
-            <b>API Error ❌</b><br>
-            ${esc(error.message)}
-          </div>
-        `;
-      }
+
+      result.innerHTML = `
+        <div class="result">
+          <b>Order Error ❌</b><br><br>
+          ${esc(error.message)}
+        </div>
+      `;
+
     }
+
   });
+
 }
 
-// Escape HTML
+
+// HTML escape
 function esc(value) {
+
   return String(value ?? "").replace(
     /[&<>"']/g,
     (char) => ({
@@ -180,4 +210,5 @@ function esc(value) {
       "'": "&#039;"
     })[char]
   );
+
 }
