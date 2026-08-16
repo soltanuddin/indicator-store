@@ -12,5 +12,12 @@
     "run_worker_first": [
       "/api/*"
     ]
-  }
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "indicator-store-db",
+      "database_id": "ff3ced91-b71d-4a4a-814e-6a727eae9b5d"
+    }
+  ]
 }
