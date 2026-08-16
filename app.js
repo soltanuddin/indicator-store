@@ -1,136 +1,183 @@
-export default {
-  async fetch(request, env) {
-    const url = new URL(request.url);
+const $ = (id) => document.getElementById(id);
 
-    // API: Create Order
-    if (url.pathname === "/api/orders" && request.method === "POST") {
+// Mobile menu
+const menu = $("menu");
+const links = $("links");
+
+if (menu && links) {
+  menu.onclick = () => {
+    links.classList.toggle("open");
+  };
+}
+
+// Buy Now buttons
+document.querySelectorAll(".choose").forEach((button) => {
+  button.addEventListener("click", () => {
+    const plan = button.dataset.plan;
+    const planSelect = $("plan");
+    const orderSection = $("order");
+
+    if (planSelect) {
+      planSelect.value = plan;
+    }
+
+    if (orderSection) {
+      orderSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  });
+});
+
+// Order form
+const orderForm = $("orderForm");
+
+if (orderForm) {
+  orderForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const result = $("orderResult");
+
+    const data = {
+      name: $("name").value.trim(),
+      email: $("email").value.trim(),
+      tradingview_username: $("tv").value.trim(),
+      plan: $("plan").value,
+      payment_method: $("payment").value,
+      transaction_id: $("trx").value.trim(),
+      message: $("message").value.trim()
+    };
+
+    if (result) {
+      result.innerHTML = `<div class="result">Submitting order...</div>`;
+    }
+
+    try {
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+      });
+
+      const text = await response.text();
+
+      let json;
+
       try {
-        const data = await request.json();
-
-        const orderId =
-          "IS-" +
-          Date.now().toString(36).toUpperCase() +
-          Math.random().toString(36).slice(2, 7).toUpperCase();
-
-        await env.DB.prepare(`
-          INSERT INTO orders (
-            order_id,
-            name,
-            email,
-            tradingview_username,
-            plan,
-            payment_method,
-            transaction_id,
-            message,
-            status,
-            created_at
-          )
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `).bind(
-          orderId,
-          data.name,
-          data.email,
-          data.tradingview_username,
-          data.plan,
-          data.payment_method,
-          data.transaction_id,
-          data.message || "",
-          "Pending",
-          new Date().toISOString()
-        ).run();
-
-        return new Response(
-          JSON.stringify({
-            success: true,
-            order_id: orderId,
-            status: "Pending"
-          }),
-          {
-            status: 200,
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }
-        );
-
-      } catch (error) {
-        return new Response(
-          JSON.stringify({
-            error: error.message
-          }),
-          {
-            status: 500,
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }
+        json = text ? JSON.parse(text) : {};
+      } catch {
+        throw new Error(
+          `Server returned invalid response (HTTP ${response.status})`
         );
       }
-    }
 
-    // API: Check Order
-    if (
-      url.pathname.startsWith("/api/orders/") &&
-      request.method === "GET"
-    ) {
-      try {
-        const orderId = decodeURIComponent(
-          url.pathname.split("/").pop()
-        );
-
-        const order = await env.DB.prepare(`
-          SELECT order_id, plan, status, created_at
-          FROM orders
-          WHERE order_id = ?
-          LIMIT 1
-        `).bind(orderId).first();
-
-        if (!order) {
-          return new Response(
-            JSON.stringify({
-              error: "Order not found"
-            }),
-            {
-              status: 404,
-              headers: {
-                "Content-Type": "application/json"
-              }
-            }
-          );
-        }
-
-        return new Response(
-          JSON.stringify(order),
-          {
-            status: 200,
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }
-        );
-
-      } catch (error) {
-        return new Response(
-          JSON.stringify({
-            error: error.message
-          }),
-          {
-            status: 500,
-            headers: {
-              "Content-Type": "application/json"
-            }
-          }
+      if (!response.ok) {
+        throw new Error(
+          json.error || `HTTP ${response.status}`
         );
       }
+
+      if (result) {
+        result.innerHTML = `
+          <div class="result">
+            <b>Order submitted ✅</b><br>
+            Order ID:
+            <strong>${esc(json.order_id)}</strong><br>
+            Status:
+            <strong>${esc(json.status || "Pending")}</strong>
+          </div>
+        `;
+      }
+
+      orderForm.reset();
+
+    } catch (error) {
+      if (result) {
+        result.innerHTML = `
+          <div class="result">
+            <b>API Error ❌</b><br>
+            ${esc(error.message)}
+          </div>
+        `;
+      }
+    }
+  });
+}
+
+// Order status
+const statusForm = $("statusForm");
+
+if (statusForm) {
+  statusForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const result = $("statusResult");
+    const orderId = $("lookup").value.trim();
+
+    if (result) {
+      result.innerHTML = `<div class="result">Checking...</div>`;
     }
 
-    // Website
-    if (env.ASSETS) {
-      return env.ASSETS.fetch(request);
-    }
+    try {
+      const response = await fetch(
+        "/api/orders/" + encodeURIComponent(orderId)
+      );
 
-    return new Response("Not found", {
-      status: 404
-    });
-  }
-};
+      const text = await response.text();
+
+      let json;
+
+      try {
+        json = text ? JSON.parse(text) : {};
+      } catch {
+        throw new Error(
+          `Server returned invalid response (HTTP ${response.status})`
+        );
+      }
+
+      if (!response.ok) {
+        throw new Error(
+          json.error || `HTTP ${response.status}`
+        );
+      }
+
+      if (result) {
+        result.innerHTML = `
+          <div class="result">
+            <b>${esc(json.order_id)}</b><br>
+            Plan: ${esc(json.plan)}<br>
+            Status:
+            <strong>${esc(json.status)}</strong>
+          </div>
+        `;
+      }
+
+    } catch (error) {
+      if (result) {
+        result.innerHTML = `
+          <div class="result">
+            <b>API Error ❌</b><br>
+            ${esc(error.message)}
+          </div>
+        `;
+      }
+    }
+  });
+}
+
+// Escape HTML
+function esc(value) {
+  return String(value ?? "").replace(
+    /[&<>"']/g,
+    (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      '"': "&quot;",
+      "'": "&#039;"
+    })[char]
+  );
+}
