@@ -3,404 +3,401 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Indicator Store — Premium Trading Tools</title>
+  <title>Indicator Store</title>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-<header class="navbar">
-  <a href="#home" class="logo">
-    <span>◆</span> INDICATOR<b>STORE</b>
-  </a>
+<header class="nav">
+  <a class="logo" href="#home">◆ INDICATOR <b>STORE</b></a>
+
+  <button id="menu">☰</button>
 
   <nav id="links">
+    <a href="#home">Home</a>
     <a href="#products">Products</a>
-    <a href="#features">Features</a>
-    <a href="#how">How It Works</a>
+    <a href="#how">How it works</a>
+    <a href="#order">Order</a>
     <a href="#status">Order Status</a>
     <a href="#faq">FAQ</a>
   </nav>
 
-  <a href="#products" class="nav-btn">Get Started →</a>
-  <button id="menu">☰</button>
+  <a class="buytop" href="#products">Buy Now</a>
 </header>
 
-<!-- HERO -->
-<section class="hero" id="home">
 
-  <div class="hero-left">
+<section id="home" class="hero">
 
-    <div class="badge">
-      <span></span> PREMIUM TRADING TECHNOLOGY
-    </div>
+  <div>
+    <div class="eyebrow">PREMIUM TRADING TOOLS</div>
 
     <h1>
-      Trade with clarity.
-      <strong>Trade with confidence.</strong>
+      Trade smarter.<br>
+      <span>Stay in control.</span>
     </h1>
 
     <p>
-      Premium trading tools designed to help you analyze markets,
-      discover opportunities and build better trading strategies.
+      Premium trading tools with simple ordering,
+      TradingView username submission and order tracking.
     </p>
 
-    <div class="hero-buttons">
-      <a href="#products" class="btn primary">Explore Plans →</a>
-      <a href="#features" class="btn">Explore Features</a>
+    <div class="row">
+      <a class="btn primary" href="#products">Explore Plans →</a>
+      <a class="btn" href="#how">How It Works</a>
     </div>
 
-    <div class="trust">
-      <div>✓ Premium Tools</div>
-      <div>✓ TradingView Support</div>
-      <div>✓ Fast Activation</div>
+    <div class="mini">
+      ✓ Secure order flow　
+      ✓ Mobile friendly　
+      ✓ Fast support
     </div>
-
   </div>
 
-  <div class="hero-chart">
-
-    <div class="chart-top">
-      <span>BTC/USD</span>
-      <span class="green">+4.82%</span>
+  <div class="chartbox">
+    <div class="charttitle">
+      TRADINGVIEW STYLE
+      <span>● LIVE</span>
     </div>
 
-    <div class="chart-area">
-
+    <div class="chart">
       <div class="grid"></div>
 
-      <svg viewBox="0 0 800 400" preserveAspectRatio="none">
+      <svg viewBox="0 0 800 360" preserveAspectRatio="none">
         <polyline
-          points="0,320 45,300 85,330 125,255 165,280 210,220 250,250 290,175 335,205 375,140 420,170 465,110 510,145 555,90 600,120 650,65 700,95 750,45 800,25"
+          points="0,270 50,250 90,290 135,210 180,235 220,170 270,205 315,125 365,160 410,95 455,140 500,115 550,155 600,75 650,115 700,60 750,92 800,45"
           fill="none"
-          stroke="#9b5cff"
-          stroke-width="7"
+          stroke="#a958ff"
+          stroke-width="6"
         />
       </svg>
 
-      <div class="signal buy">BUY</div>
-      <div class="signal sell">SELL</div>
-
-      <div class="price-line"></div>
-
+      <i class="sig buy">BUY</i>
+      <i class="sig sell">SELL</i>
     </div>
 
-    <div class="chart-bottom">
-      <span>Premium Signal</span>
-      <strong>+24.8%</strong>
+    <div class="chartfoot">
+      Premium Signal <b>+24.8%</b>
     </div>
-
   </div>
 
 </section>
 
-<!-- STATS -->
-<section class="stats">
 
-  <div>
-    <strong>24/7</strong>
-    <span>Market Analysis</span>
-  </div>
-
-  <div>
-    <strong>3+</strong>
-    <span>Premium Tools</span>
-  </div>
-
-  <div>
-    <strong>100%</strong>
-    <span>Mobile Friendly</span>
-  </div>
-
-  <div>
-    <strong>Fast</strong>
-    <span>Order Activation</span>
-  </div>
-
-</section>
-
-<!-- PRODUCTS -->
 <section class="section" id="products">
 
-  <div class="section-title">
-    <div class="eyebrow">PRICING</div>
-    <h2>Choose your trading plan</h2>
-    <p>Simple pricing. No complicated setup.</p>
+  <div class="heading">
+    <div class="eyebrow">PRODUCTS</div>
+    <h2>Choose your plan</h2>
+    <p>Choose the plan that works best for you.</p>
   </div>
 
   <div class="products">
 
     <article class="card">
 
-      <div class="plan-name">STARTER</div>
+      <small>STARTER</small>
 
       <h3>7 Days</h3>
 
-      <div class="price">
-        <span>$</span>15
-      </div>
-
-      <p>Perfect for trying our premium tools.</p>
+      <div class="price">$15</div>
 
       <ul>
-        <li>✓ Full indicator access</li>
-        <li>✓ 1 TradingView username</li>
-        <li>✓ Standard support</li>
-        <li>✓ Mobile access</li>
+        <li>Full indicator access</li>
+        <li>1 TradingView username</li>
+        <li>Standard support</li>
       </ul>
 
-      <button class="btn choose" data-plan="7 Days">
-        Get Starter →
+      <button
+        class="btn primary choose"
+        data-plan="7 Days">
+        Buy Now
       </button>
 
     </article>
+
 
     <article class="card featured">
 
-      <div class="popular">MOST POPULAR</div>
+      <b class="popular">MOST POPULAR</b>
 
-      <div class="plan-name">PRO</div>
+      <small>PRO</small>
 
       <h3>30 Days</h3>
 
-      <div class="price">
-        <span>$</span>39
-      </div>
-
-      <p>Our best choice for active traders.</p>
+      <div class="price">$39</div>
 
       <ul>
-        <li>✓ Full indicator access</li>
-        <li>✓ 1 TradingView username</li>
-        <li>✓ Priority support</li>
-        <li>✓ Premium alerts</li>
+        <li>Full indicator access</li>
+        <li>1 TradingView username</li>
+        <li>Priority support</li>
       </ul>
 
-      <button class="btn primary choose" data-plan="30 Days">
-        Get Pro →
+      <button
+        class="btn primary choose"
+        data-plan="30 Days">
+        Buy Now
       </button>
 
     </article>
 
   </div>
-
 </section>
 
-<!-- FEATURES -->
-<section class="section dark" id="features">
 
-  <div class="section-title">
-    <div class="eyebrow">FEATURES</div>
-    <h2>Everything you need to analyze</h2>
-    <p>Powerful tools in a simple interface.</p>
-  </div>
+<section class="section dark" id="how">
 
-  <div class="features">
-
-    <div class="feature">
-      <div class="icon">◈</div>
-      <h3>Market Signals</h3>
-      <p>Identify potential market opportunities with easy-to-read signals.</p>
-    </div>
-
-    <div class="feature">
-      <div class="icon">◉</div>
-      <h3>Smart Analysis</h3>
-      <p>Analyze price action and market structure from one place.</p>
-    </div>
-
-    <div class="feature">
-      <div class="icon">⌁</div>
-      <h3>TradingView</h3>
-      <p>Submit your TradingView username for authorized activation.</p>
-    </div>
-
-    <div class="feature">
-      <div class="icon">⚡</div>
-      <h3>Fast Activation</h3>
-      <p>Orders are reviewed and activated after payment verification.</p>
-    </div>
-
-  </div>
-
-</section>
-
-<!-- HOW -->
-<section class="section" id="how">
-
-  <div class="section-title">
+  <div class="heading">
     <div class="eyebrow">PROCESS</div>
     <h2>How it works</h2>
   </div>
 
   <div class="steps">
 
-    <div class="step">
-      <span>01</span>
-      <h3>Choose a plan</h3>
-      <p>Select the package that works for you.</p>
+    <div>
+      <b>01</b>
+      <h3>Choose Plan</h3>
+      <p>আপনার পছন্দের package নির্বাচন করুন।</p>
     </div>
 
-    <div class="step">
-      <span>02</span>
-      <h3>Make payment</h3>
-      <p>Pay using your available payment method.</p>
+    <div>
+      <b>02</b>
+      <h3>Pay</h3>
+      <p>Nagad দিয়ে payment করুন।</p>
     </div>
 
-    <div class="step">
-      <span>03</span>
-      <h3>Submit details</h3>
-      <p>Enter your TradingView username and transaction ID.</p>
+    <div>
+      <b>03</b>
+      <h3>Submit Details</h3>
+      <p>TradingView username এবং Transaction ID দিন।</p>
     </div>
 
-    <div class="step">
-      <span>04</span>
-      <h3>Get activated</h3>
-      <p>Admin verifies the payment and processes your order.</p>
+    <div>
+      <b>04</b>
+      <h3>Activation</h3>
+      <p>Payment যাচাই করার পর order process করা হবে।</p>
     </div>
 
   </div>
 
 </section>
 
-<!-- ORDER -->
-<section class="section order-section" id="order">
 
-  <div class="section-title">
+<section class="section order" id="order">
+
+  <div class="heading">
     <div class="eyebrow">ORDER</div>
-    <h2>Start your order</h2>
-    <p>Fill in your information below.</p>
+    <h2>Place your order</h2>
   </div>
 
-  <form id="orderForm" class="order-form">
+
+  <form id="orderForm" class="form">
 
     <label>
       Full Name
-      <input id="name" required placeholder="Your name">
+      <input id="name" required>
     </label>
+
 
     <label>
       Email
-      <input id="email" type="email" required placeholder="you@example.com">
+      <input id="email" type="email" required>
     </label>
+
 
     <label>
       TradingView Username
-      <input id="tv" required placeholder="Your TradingView username">
+      <input id="tv" required>
     </label>
+
 
     <label>
       Plan
+
       <select id="plan" required>
-        <option value="">Select plan</option>
-        <option>7 Days</option>
-        <option>30 Days</option>
+
+        <option value="">
+          Select plan
+        </option>
+
+        <option value="7 Days">
+          7 Days — $15
+        </option>
+
+        <option value="30 Days">
+          30 Days — $39
+        </option>
+
       </select>
+
     </label>
+
 
     <label>
       Payment Method
+
       <select id="payment" required>
-        <option value="">Select payment</option>
-        <option>bKash</option>
-        <option>Nagad</option>
-        <option>Binance Pay</option>
+
+        <option value="">
+          Select payment method
+        </option>
+
+        <option value="Nagad">
+          Nagad
+        </option>
+
       </select>
+
     </label>
+
+
+    <div
+      id="paymentInfo"
+      class="payment-info"
+      style="display:none;">
+
+      <strong>💳 Nagad Payment</strong>
+
+      <p>
+        এই নম্বরে Send Money করুন:
+      </p>
+
+      <div class="payment-number">
+        01759977759
+      </div>
+
+      <p>
+        Payment করার পর Transaction ID নিচের ঘরে দিন।
+      </p>
+
+    </div>
+
 
     <label>
       Transaction ID
-      <input id="trx" required placeholder="Enter transaction ID">
+
+      <input
+        id="trx"
+        placeholder="Nagad Transaction ID"
+        required>
+
     </label>
+
 
     <label class="wide">
       Message
-      <textarea id="message" rows="4" placeholder="Optional message"></textarea>
+
+      <textarea
+        id="message"
+        rows="4">
+      </textarea>
+
     </label>
 
-    <button class="btn primary wide" type="submit">
+
+    <button
+      class="btn primary wide"
+      type="submit">
+
       Submit Order →
+
     </button>
 
   </form>
+
 
   <div id="orderResult"></div>
 
 </section>
 
-<!-- STATUS -->
-<section class="section status-section" id="status">
 
-  <div class="section-title">
+<section class="section status" id="status">
+
+  <div class="heading">
     <div class="eyebrow">ORDER STATUS</div>
     <h2>Track your order</h2>
-    <p>Enter your Order ID to check the current status.</p>
   </div>
 
-  <form id="statusForm" class="status-form">
+
+  <form
+    id="statusForm"
+    class="statusform">
 
     <input
       id="lookup"
-      required
-      placeholder="IS-XXXXXXXX"
-    >
+      placeholder="IS-12345678"
+      required>
 
-    <button class="btn primary">
+    <button
+      class="btn primary"
+      type="submit">
+
       Check Status
+
     </button>
 
   </form>
+
 
   <div id="statusResult"></div>
 
 </section>
 
-<!-- FAQ -->
+
 <section class="section faq" id="faq">
 
-  <div class="section-title">
+  <div class="heading">
     <div class="eyebrow">FAQ</div>
-    <h2>Frequently asked questions</h2>
+    <h2>Frequently Asked Questions</h2>
   </div>
 
-  <details>
-    <summary>কেন TradingView username লাগবে?</summary>
-    <p>
-      Authorized activation workflow-এর জন্য আপনার TradingView username
-      প্রয়োজন হতে পারে।
-    </p>
-  </details>
 
   <details>
-    <summary>Payment করার পর কী হবে?</summary>
+    <summary>
+      কেন TradingView username লাগবে?
+    </summary>
+
     <p>
-      আপনার order প্রথমে Pending থাকবে। Payment যাচাইয়ের পর admin
-      order status পরিবর্তন করবে।
+      আপনার order process এবং authorized activation
+      workflow-এর জন্য TradingView username প্রয়োজন।
     </p>
+
   </details>
 
+
   <details>
-    <summary>কোন payment method ব্যবহার করা যাবে?</summary>
+    <summary>
+      Payment করার পর কী হবে?
+    </summary>
+
     <p>
-      বর্তমানে bKash, Nagad এবং Binance Pay অপশন রাখা হয়েছে।
+      Payment করার পর order Pending থাকবে।
+      Payment যাচাই করার পর status update করা হবে।
     </p>
+
+  </details>
+
+
+  <details>
+    <summary>
+      Payment কীভাবে করব?
+    </summary>
+
+    <p>
+      Nagad থেকে 01759977759 নম্বরে payment করুন।
+      এরপর Transaction ID দিয়ে order submit করুন।
+    </p>
+
   </details>
 
 </section>
 
+
 <footer>
-
-  <div class="footer-logo">
-    ◆ INDICATOR <b>STORE</b>
-  </div>
-
-  <p>
-    Premium trading tools for smarter market analysis.
-  </p>
-
-  <span>© 2026 Indicator Store</span>
-
+  ◆ INDICATOR STORE
+  <span>© 2026</span>
 </footer>
+
 
 <script src="app.js"></script>
 
