@@ -3,16 +3,13 @@
   "name": "indicator-store",
   "main": "worker.js",
   "compatibility_date": "2026-08-15",
-  "observability": {
-    "enabled": true
-  },
+
   "assets": {
-    "directory": ".",
+    "directory": "./",
     "binding": "ASSETS",
-    "run_worker_first": [
-      "/api/*"
-    ]
+    "run_worker_first": ["/api/*"]
   },
+
   "d1_databases": [
     {
       "binding": "DB",
