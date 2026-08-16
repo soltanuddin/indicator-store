@@ -2,35 +2,29 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // Create order
+    // API: Create Order
     if (url.pathname === "/api/orders" && request.method === "POST") {
       try {
         const data = await request.json();
 
-        const required = [
-          "name",
-          "email",
-          "tradingview_username",
-          "plan",
-          "payment_method",
-          "transaction_id"
-        ];
-
-        for (const field of required) {
-          if (!data[field] || !String(data[field]).trim()) {
-            return Response.json(
-              { error: `${field} is required` },
-              { status: 400 }
-            );
-          }
+        if (!env.DB) {
+          return new Response(
+            JSON.stringify({
+              error: "DB binding not found"
+            }),
+            {
+              status: 500,
+              headers: {
+                "Content-Type": "application/json"
+              }
+            }
+          );
         }
 
         const orderId =
           "IS-" +
           Date.now().toString(36).toUpperCase() +
-          Math.random().toString(36).slice(2, 6).toUpperCase();
-
-        const createdAt = new Date().toISOString();
+          Math.random().toString(36).slice(2, 7).toUpperCase();
 
         await env.DB.prepare(`
           INSERT INTO orders (
@@ -46,73 +40,133 @@ export default {
             created_at
           )
           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-        `)
-          .bind(
-            orderId,
-            String(data.name).trim(),
-            String(data.email).trim(),
-            String(data.tradingview_username).trim(),
-            String(data.plan).trim(),
-            String(data.payment_method).trim(),
-            String(data.transaction_id).trim(),
-            String(data.message || "").trim(),
-            "Pending",
-            createdAt
-          )
-          .run();
+        `).bind(
+          orderId,
+          data.name,
+          data.email,
+          data.tradingview_username,
+          data.plan,
+          data.payment_method,
+          data.transaction_id,
+          data.message || "",
+          "Pending",
+          new Date().toISOString()
+        ).run();
 
-        return Response.json({
-          success: true,
-          order_id: orderId,
-          status: "Pending"
-        });
+        return new Response(
+          JSON.stringify({
+            success: true,
+            order_id: orderId,
+            status: "Pending"
+          }),
+          {
+            status: 200,
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        );
 
       } catch (error) {
-        return Response.json(
+        return new Response(
+          JSON.stringify({
+            error: error.message
+          }),
           {
-            error: error.message || "Database error"
-          },
-          { status: 500 }
+            status: 500,
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
         );
       }
     }
 
-    // Check order
+    // API: Check Order
     if (
       url.pathname.startsWith("/api/orders/") &&
       request.method === "GET"
     ) {
       try {
         const orderId = decodeURIComponent(
-          url.pathname.split("/").pop()
+          url.pathname.slice("/api/orders/".length)
         );
+
+        if (!env.DB) {
+          return new Response(
+            JSON.stringify({
+              error: "DB binding not found"
+            }),
+            {
+              status: 500,
+              headers: {
+                "Content-Type": "application/json"
+              }
+            }
+          );
+        }
 
         const order = await env.DB.prepare(`
           SELECT order_id, plan, status, created_at
           FROM orders
           WHERE order_id = ?
           LIMIT 1
-        `)
-          .bind(orderId)
-          .first();
+        `).bind(orderId).first();
 
         if (!order) {
-          return Response.json(
-            { error: "Order not found" },
-            { status: 404 }
+          return new Response(
+            JSON.stringify({
+              error: "Order not found"
+            }),
+            {
+              status: 404,
+              headers: {
+                "Content-Type": "application/json"
+              }
+            }
           );
         }
 
-        return Response.json(order);
+        return new Response(
+          JSON.stringify(order),
+          {
+            status: 200,
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
+        );
 
       } catch (error) {
-        return Response.json(
+        return new Response(
+          JSON.stringify({
+            error: error.message
+          }),
           {
-            error: error.message || "Database error"
-          },
-          { status: 500 }
+            status: 500,
+            headers: {
+              "Content-Type": "application/json"
+            }
+          }
         );
       }
+    }
+
+    // API test
+    if (url.pathname === "/api/orders" && request.method === "GET") {
+      return new Response(
+        JSON.stringify({
+          success: true,
+          api: "orders",
+          message: "API is working"
+        }),
+        {
+          status: 200,
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
     }
 
     // Website
@@ -120,6 +174,8 @@ export default {
       return env.ASSETS.fetch(request);
     }
 
-    return new Response("Not found", { status: 404 });
+    return new Response("Not found", {
+      status: 404
+    });
   }
 };
