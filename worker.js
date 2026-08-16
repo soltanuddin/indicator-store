@@ -2,7 +2,7 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
-    // Create a new order
+    // Create order
     if (url.pathname === "/api/orders" && request.method === "POST") {
       try {
         const data = await request.json();
@@ -66,24 +66,27 @@ export default {
           order_id: orderId,
           status: "Pending"
         });
+
       } catch (error) {
         return Response.json(
-          { error: "Could not create order" },
+          {
+            error: error.message || "Database error"
+          },
           { status: 500 }
         );
       }
     }
 
-    // Check order status
+    // Check order
     if (
       url.pathname.startsWith("/api/orders/") &&
       request.method === "GET"
     ) {
-      const orderId = decodeURIComponent(
-        url.pathname.split("/").pop()
-      );
-
       try {
+        const orderId = decodeURIComponent(
+          url.pathname.split("/").pop()
+        );
+
         const order = await env.DB.prepare(`
           SELECT order_id, plan, status, created_at
           FROM orders
@@ -101,15 +104,18 @@ export default {
         }
 
         return Response.json(order);
+
       } catch (error) {
         return Response.json(
-          { error: "Could not check order" },
+          {
+            error: error.message || "Database error"
+          },
           { status: 500 }
         );
       }
     }
 
-    // Serve website files
+    // Website
     if (env.ASSETS) {
       return env.ASSETS.fetch(request);
     }
