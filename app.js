@@ -27,9 +27,19 @@ $("orderForm").onsubmit=async e=>{
       body:JSON.stringify(p)
     });
 
-    const d=await r.json();
+    const text=await r.text();
 
-    if(!r.ok) throw Error(d.error || "API request failed");
+    if(!r.ok){
+      throw Error(`HTTP ${r.status}: ${text || "Empty response"}`);
+    }
+
+    let d;
+
+    try{
+      d=JSON.parse(text);
+    }catch{
+      throw Error(`Invalid JSON response: ${text || "Empty response"}`);
+    }
 
     $("orderResult").innerHTML=
       `<div class="result">
@@ -55,9 +65,13 @@ $("statusForm").onsubmit=async e=>{
       "/api/orders/"+encodeURIComponent($("lookup").value)
     );
 
-    const d=await r.json();
+    const text=await r.text();
 
-    if(!r.ok) throw Error(d.error || "Order not found");
+    if(!r.ok){
+      throw Error(`HTTP ${r.status}: ${text || "Empty response"}`);
+    }
+
+    const d=JSON.parse(text);
 
     $("statusResult").innerHTML=
       `<div class="result">
