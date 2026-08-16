@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Indicator Store — Admin</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f7fb;
+      color: #111827;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 14px;
+      box-shadow: 0 5px 20px rgba(0,0,0,.08);
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      margin: 8px 0 12px;
+      font-size: 15px;
+    }
+
+    button {
+      padding: 11px 18px;
+      border: 0;
+      border-radius: 8px;
+      background: #111827;
+      color: white;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    button:hover {
+      opacity: .9;
+    }
+
+    .error {
+      color: #dc2626;
+      margin-top: 10px;
+    }
+
+    .success {
+      color: #16a34a;
+      margin-top: 10px;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 1000px;
+    }
+
+    th,
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #eee;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: #f8fafc;
+    }
+
+    select {
+      padding: 8px;
+      border: 1px solid #ddd;
+      border-radius: 7px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logout {
+      background: #dc2626;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+
+    <div class="top">
+      <h1>◆ INDICATOR STORE — ADMIN</h1>
+      <button id="logoutBtn" class="logout hidden">Logout</button>
+    </div>
+
+    <!-- LOGIN -->
+    <div id="loginCard" class="card">
+      <h2>Admin Login</h2>
+
+      <label>Admin Key</label>
+      <input
+        type="password"
+        id="adminKey"
+        placeholder="Enter ADMIN_KEY"
+      >
+
+      <button id="loginBtn">Login</button>
+
+      <div id="loginResult"></div>
+    </div>
+
+    <!-- ADMIN -->
+    <div id="adminPanel" class="hidden">
+
+      <div class="card">
+        <div class="top">
+          <h2>Orders</h2>
+          <button id="refreshBtn">Refresh Orders</button>
+        </div>
+
+        <div id="ordersResult"></div>
+
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr>
+                <th>Order ID</th>
+                <th>Customer</th>
+                <th>Email</th>
+                <th>TradingView</th>
+                <th>Plan</th>
+                <th>Payment</th>
+                <th>Transaction ID</th>
+                <th>Status</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+
+            <tbody id="ordersTable">
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+<script>
+  const $ = (id) => document.getElementById(id);
+
+  let adminKey = "";
+
+  const statuses = [
+    "Pending",
+    "Payment Verified",
+    "Activated",
+    "Completed"
+  ];
+
+  $("loginBtn").addEventListener("click", async () => {
+
+    const key = $("adminKey").value.trim();
+
+    if (!key) {
+      $("loginResult").innerHTML =
+        '<div class="error">Admin Key দিন।</div>';
+      return;
+    }
+
+    adminKey = key;
+
+    $("loginResult").innerHTML =
+      '<div>Checking...</div>';
+
+    try {
+
+      const response = await fetch("/api/admin/orders", {
+        method: "GET",
+        headers: {
+          "X-Admin-Key": adminKey
+        }
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        adminKey = "";
+
+        throw new Error(
+          data.error || "Login failed"
+        );
+      }
+
+      $("loginCard").classList.add("hidden");
+      $("adminPanel").classList.remove("hidden");
+      $("logoutBtn").classList.remove("hidden");
+
+      $("loginResult").innerHTML = "";
+
+      renderOrders(data.orders || []);
+
+    } catch (error) {
+
+      $("loginResult").innerHTML =
+        '<div class="error">' +
+        esc(error.message) +
+        '</div>';
+    }
+  });
+
+
+  $("refreshBtn").addEventListener("click", loadOrders);
+
+
+  async function loadOrders() {
+
+    $("ordersResult").innerHTML =
+      "<div>Loading...</div>";
+
+    try {
+
+      const response = await fetch(
+        "/api/admin/orders",
+        {
+          headers: {
+            "X-Admin-Key": adminKey
+          }
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || "Failed to load orders"
+        );
+      }
+
+      renderOrders(data.orders || []);
+
+      $("ordersResult").innerHTML =
+        '<div class="success">' +
+        "Orders loaded: " +
+        data.orders.length +
+        "</div>";
+
+    } catch (error) {
+
+      $("ordersResult").innerHTML =
+        '<div class="error">' +
+        esc(error.message) +
+        "</div>";
+    }
+  }
+
+
+  function renderOrders(orders) {
+
+    const table = $("ordersTable");
+
+    table.innerHTML = "";
+
+    if (!orders.length) {
+
+      table.innerHTML =
+        '<tr><td colspan="9">No orders found.</td></tr>';
+
+      return;
+    }
+
+    orders.forEach(order => {
+
+      const tr = document.createElement("tr");
+
+      tr.innerHTML = `
+        <td>
+          <strong>${esc(order.order_id)}</strong>
+        </td>
+
+        <td>
+          ${esc(order.name)}
+        </td>
+
+        <td>
+          ${esc(order.email)}
+        </td>
+
+        <td>
+          ${esc(order.tradingview_username)}
+        </td>
+
+        <td>
+          ${esc(order.plan)}
+        </td>
+
+        <td>
+          ${esc(order.payment_method)}
+        </td>
+
+        <td>
+          ${esc(order.transaction_id)}
+        </td>
+
+        <td>
+          <select class="statusSelect">
+            ${statuses.map(status => `
+              <option
+                value="${esc(status)}"
+                ${status === order.status ? "selected" : ""}
+              >
+                ${esc(status)}
+              </option>
+            `).join("")}
+          </select>
+
+          <button class="saveBtn">
+            Save
+          </button>
+        </td>
+
+        <td>
+          ${esc(order.created_at)}
+        </td>
+      `;
+
+      const select = tr.querySelector(".statusSelect");
+      const saveBtn = tr.querySelector(".saveBtn");
+
+      saveBtn.addEventListener("click", () => {
+
+        updateStatus(
+          order.order_id,
+          select.value,
+          saveBtn
+        );
+
+      });
+
+      table.appendChild(tr);
+    });
+  }
+
+
+  async function updateStatus(orderId, status, button) {
+
+    button.disabled = true;
+    button.textContent = "Saving...";
+
+    try {
+
+      const response = await fetch(
+        "/api/admin/orders/" +
+        encodeURIComponent(orderId),
+        {
+          method: "PATCH",
+
+          headers: {
+            "Content-Type": "application/json",
+            "X-Admin-Key": adminKey
+          },
+
+          body: JSON.stringify({
+            status: status
+          })
+        }
+      );
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(
+          data.error || "Update failed"
+        );
+      }
+
+      button.textContent = "Saved ✓";
+
+      setTimeout(() => {
+        button.textContent = "Save";
+      }, 1500);
+
+    } catch (error) {
+
+      alert(error.message);
+
+      button.textContent = "Save";
+
+    } finally {
+
+      button.disabled = false;
+    }
+  }
+
+
+  $("logoutBtn").addEventListener("click", () => {
+
+    adminKey = "";
+
+    $("adminPanel").classList.add("hidden");
+    $("logoutBtn").classList.add("hidden");
+    $("loginCard").classList.remove("hidden");
+
+    $("adminKey").value = "";
+    $("ordersTable").innerHTML = "";
+    $("loginResult").innerHTML = "";
+
+  });
+
+
+  function esc(value) {
+
+    return String(value ?? "").replace(
+      /[&<>"']/g,
+      char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[char]
+    );
+
+  }
+</script>
+
+</body>
+</html>
