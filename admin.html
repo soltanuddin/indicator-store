@@ -1,362 +1,974 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Indicator Store — Admin</title>
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Indicator Store — Admin</title>
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f5f7fb;
-      color: #111827;
-    }
+<style>
+*{box-sizing:border-box}
 
-    .container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 20px;
-    }
+:root{
+  --bg:#070a12;
+  --panel:#0d1220;
+  --panel2:#111827;
+  --border:rgba(255,255,255,.08);
+  --text:#f8fafc;
+  --muted:#94a3b8;
+  --purple:#8b5cf6;
+  --blue:#3b82f6;
+  --green:#22c55e;
+  --yellow:#f59e0b;
+  --red:#ef4444;
+}
 
-    h1 {
-      margin-bottom: 20px;
-    }
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:
+    radial-gradient(circle at 20% 0%,rgba(124,58,237,.18),transparent 30%),
+    radial-gradient(circle at 90% 10%,rgba(37,99,235,.12),transparent 28%),
+    var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
 
-    .card {
-      background: white;
-      padding: 20px;
-      border-radius: 14px;
-      box-shadow: 0 5px 20px rgba(0,0,0,.08);
-      margin-bottom: 20px;
-    }
+button,input,select{font:inherit}
 
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      margin: 8px 0 12px;
-      font-size: 15px;
-    }
+.container{
+  width:min(1450px,94%);
+  margin:auto;
+  padding:25px 0 50px;
+}
 
-    button {
-      padding: 11px 18px;
-      border: 0;
-      border-radius: 8px;
-      background: #111827;
-      color: white;
-      cursor: pointer;
-      font-weight: bold;
-    }
+/* HEADER */
 
-    button:hover {
-      opacity: .9;
-    }
+.header{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:20px;
+  margin-bottom:28px;
+}
 
-    .error {
-      color: #dc2626;
-      margin-top: 10px;
-    }
+.brand{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
 
-    .success {
-      color: #16a34a;
-      margin-top: 10px;
-    }
+.logo{
+  width:45px;
+  height:45px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  font-size:22px;
+  box-shadow:0 10px 35px rgba(124,58,237,.35);
+}
 
-    .table-wrap {
-      overflow-x: auto;
-    }
+.brand h1{
+  margin:0;
+  font-size:21px;
+  letter-spacing:.5px;
+}
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      min-width: 1000px;
-    }
+.brand p{
+  margin:3px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
 
-    th,
-    td {
-      padding: 12px;
-      border-bottom: 1px solid #eee;
-      text-align: left;
-      vertical-align: top;
-    }
+.logout{
+  background:rgba(239,68,68,.12);
+  border:1px solid rgba(239,68,68,.25);
+  color:#fca5a5;
+  padding:10px 17px;
+  border-radius:10px;
+  cursor:pointer;
+}
 
-    th {
-      background: #f8fafc;
-    }
+/* LOGIN */
 
-    select {
-      padding: 8px;
-      border: 1px solid #ddd;
-      border-radius: 7px;
-    }
+.login-wrap{
+  min-height:75vh;
+  display:grid;
+  place-items:center;
+}
 
-    .hidden {
-      display: none;
-    }
+.login-card{
+  width:min(430px,100%);
+  background:rgba(13,18,32,.92);
+  border:1px solid var(--border);
+  border-radius:24px;
+  padding:34px;
+  box-shadow:0 30px 90px rgba(0,0,0,.45);
+}
 
-    .top {
-      display: flex;
-      justify-content: space-between;
-      gap: 10px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
+.login-icon{
+  width:65px;
+  height:65px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  font-size:30px;
+  margin-bottom:20px;
+}
 
-    .logout {
-      background: #dc2626;
-    }
-  </style>
+.login-card h2{
+  margin:0 0 7px;
+  font-size:25px;
+}
+
+.login-card p{
+  color:var(--muted);
+  margin:0 0 25px;
+}
+
+label{
+  display:block;
+  color:#cbd5e1;
+  font-size:13px;
+  margin-bottom:8px;
+}
+
+input,select{
+  width:100%;
+  background:#080c16;
+  color:white;
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:13px 14px;
+  outline:none;
+}
+
+input:focus,select:focus{
+  border-color:var(--purple);
+  box-shadow:0 0 0 3px rgba(139,92,246,.12);
+}
+
+.login-btn,.refresh{
+  width:100%;
+  border:0;
+  border-radius:11px;
+  padding:13px;
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+  background:linear-gradient(135deg,var(--purple),var(--blue));
+  box-shadow:0 10px 25px rgba(99,102,241,.22);
+}
+
+.error{
+  color:#fca5a5;
+  background:rgba(239,68,68,.08);
+  border:1px solid rgba(239,68,68,.18);
+  padding:10px;
+  border-radius:9px;
+  margin-top:14px;
+}
+
+.success{
+  color:#86efac;
+  background:rgba(34,197,94,.08);
+  border:1px solid rgba(34,197,94,.16);
+  padding:10px;
+  border-radius:9px;
+  margin-top:14px;
+}
+
+/* DASHBOARD */
+
+.hidden{display:none!important}
+
+.dashboard{
+  animation:fade .35s ease;
+}
+
+@keyframes fade{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:none}
+}
+
+/* STATS */
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:15px;
+  margin-bottom:20px;
+}
+
+.stat{
+  position:relative;
+  overflow:hidden;
+  background:linear-gradient(145deg,rgba(17,24,39,.95),rgba(10,14,25,.95));
+  border:1px solid var(--border);
+  border-radius:17px;
+  padding:20px;
+}
+
+.stat:after{
+  content:"";
+  position:absolute;
+  width:100px;
+  height:100px;
+  border-radius:50%;
+  right:-40px;
+  top:-40px;
+  background:rgba(139,92,246,.08);
+}
+
+.stat-icon{
+  font-size:20px;
+  margin-bottom:12px;
+}
+
+.stat small{
+  color:var(--muted);
+}
+
+.stat h3{
+  font-size:27px;
+  margin:7px 0 0;
+}
+
+/* ORDERS CARD */
+
+.orders-card{
+  background:rgba(13,18,32,.9);
+  border:1px solid var(--border);
+  border-radius:20px;
+  overflow:hidden;
+  box-shadow:0 20px 70px rgba(0,0,0,.2);
+}
+
+.orders-head{
+  padding:20px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:15px;
+  border-bottom:1px solid var(--border);
+}
+
+.orders-title h2{
+  margin:0;
+  font-size:20px;
+}
+
+.orders-title p{
+  margin:5px 0 0;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+}
+
+.search{
+  width:250px;
+}
+
+.refresh{
+  width:auto;
+  padding:11px 18px;
+}
+
+/* TABLE */
+
+.table-wrap{
+  width:100%;
+  overflow-x:auto;
+}
+
+table{
+  width:100%;
+  min-width:1100px;
+  border-collapse:collapse;
+}
+
+th{
+  text-align:left;
+  color:#94a3b8;
+  font-size:11px;
+  text-transform:uppercase;
+  letter-spacing:.7px;
+  background:#0a0f1b;
+  padding:14px;
+}
+
+td{
+  padding:15px 14px;
+  border-top:1px solid var(--border);
+  color:#dbe4f0;
+  font-size:13px;
+  vertical-align:middle;
+}
+
+tr:hover td{
+  background:rgba(255,255,255,.018);
+}
+
+.order-id{
+  color:#a78bfa;
+  font-weight:700;
+}
+
+.email{
+  color:#94a3b8;
+}
+
+.plan{
+  font-weight:700;
+  color:#e9d5ff;
+}
+
+.payment{
+  color:#93c5fd;
+}
+
+.trx{
+  font-family:monospace;
+  color:#cbd5e1;
+}
+
+/* STATUS */
+
+.status-box{
+  display:flex;
+  align-items:center;
+  gap:7px;
+}
+
+.status-select{
+  min-width:150px;
+  padding:8px 9px;
+  border-radius:9px;
+  font-size:12px;
+}
+
+.save-btn{
+  border:1px solid rgba(34,197,94,.2);
+  background:rgba(34,197,94,.08);
+  color:#86efac;
+  padding:8px 12px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:700;
+  font-size:12px;
+}
+
+.save-btn:hover{
+  background:rgba(34,197,94,.16);
+}
+
+.save-btn:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+/* STATUS COLORS */
+
+.badge{
+  display:inline-block;
+  padding:5px 9px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:700;
+}
+
+.badge.pending{
+  background:rgba(245,158,11,.1);
+  color:#fbbf24;
+}
+
+.badge.verified{
+  background:rgba(59,130,246,.1);
+  color:#60a5fa;
+}
+
+.badge.activated{
+  background:rgba(139,92,246,.12);
+  color:#c4b5fd;
+}
+
+.badge.completed{
+  background:rgba(34,197,94,.1);
+  color:#4ade80;
+}
+
+/* EMPTY */
+
+.empty{
+  text-align:center;
+  padding:60px 20px;
+  color:#64748b;
+}
+
+.empty-icon{
+  font-size:40px;
+  margin-bottom:10px;
+}
+
+/* FOOTER */
+
+footer{
+  text-align:center;
+  color:#475569;
+  font-size:12px;
+  margin-top:25px;
+}
+
+/* MOBILE */
+
+@media(max-width:900px){
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .orders-head{
+    align-items:stretch;
+    flex-direction:column;
+  }
+
+  .actions{
+    flex-direction:column;
+  }
+
+  .search,
+  .refresh{
+    width:100%;
+  }
+}
+
+@media(max-width:600px){
+
+  .container{
+    width:92%;
+    padding-top:18px;
+  }
+
+  .header{
+    align-items:flex-start;
+  }
+
+  .brand h1{
+    font-size:17px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+  }
+
+  .stat{
+    padding:15px;
+  }
+
+  .stat h3{
+    font-size:22px;
+  }
+
+  .login-card{
+    padding:25px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <div class="container">
+<div class="container">
 
-    <div class="top">
-      <h1>◆ INDICATOR STORE — ADMIN</h1>
-      <button id="logoutBtn" class="logout hidden">Logout</button>
+  <!-- HEADER -->
+  <header class="header">
+
+    <div class="brand">
+      <div class="logo">◆</div>
+
+      <div>
+        <h1>INDICATOR STORE</h1>
+        <p>Premium Trading Tools — Admin Dashboard</p>
+      </div>
     </div>
 
-    <!-- LOGIN -->
-    <div id="loginCard" class="card">
-      <h2>Admin Login</h2>
+    <button id="logoutBtn" class="logout hidden">
+      Logout
+    </button>
 
-      <label>Admin Key</label>
+  </header>
+
+
+  <!-- LOGIN -->
+  <div id="loginCard" class="login-wrap">
+
+    <div class="login-card">
+
+      <div class="login-icon">🔐</div>
+
+      <h2>Welcome Back</h2>
+
+      <p>Sign in to manage your Indicator Store orders.</p>
+
+      <label for="adminKey">Admin Key</label>
+
       <input
         type="password"
         id="adminKey"
-        placeholder="Enter ADMIN_KEY"
+        placeholder="Enter your admin key"
       >
 
-      <button id="loginBtn">Login</button>
+      <br><br>
+
+      <button id="loginBtn" class="login-btn">
+        Login to Dashboard →
+      </button>
 
       <div id="loginResult"></div>
-    </div>
-
-    <!-- ADMIN -->
-    <div id="adminPanel" class="hidden">
-
-      <div class="card">
-        <div class="top">
-          <h2>Orders</h2>
-          <button id="refreshBtn">Refresh Orders</button>
-        </div>
-
-        <div id="ordersResult"></div>
-
-        <div class="table-wrap">
-          <table>
-            <thead>
-              <tr>
-                <th>Order ID</th>
-                <th>Customer</th>
-                <th>Email</th>
-                <th>TradingView</th>
-                <th>Plan</th>
-                <th>Payment</th>
-                <th>Transaction ID</th>
-                <th>Status</th>
-                <th>Created</th>
-              </tr>
-            </thead>
-
-            <tbody id="ordersTable">
-            </tbody>
-          </table>
-        </div>
-      </div>
 
     </div>
 
   </div>
 
+
+  <!-- DASHBOARD -->
+  <main id="adminPanel" class="dashboard hidden">
+
+    <!-- STATS -->
+
+    <section class="stats">
+
+      <div class="stat">
+        <div class="stat-icon">📦</div>
+        <small>Total Orders</small>
+        <h3 id="totalOrders">0</h3>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">⏳</div>
+        <small>Pending</small>
+        <h3 id="pendingOrders">0</h3>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">⚡</div>
+        <small>Activated</small>
+        <h3 id="activatedOrders">0</h3>
+      </div>
+
+      <div class="stat">
+        <div class="stat-icon">✓</div>
+        <small>Completed</small>
+        <h3 id="completedOrders">0</h3>
+      </div>
+
+    </section>
+
+
+    <!-- ORDERS -->
+
+    <section class="orders-card">
+
+      <div class="orders-head">
+
+        <div class="orders-title">
+          <h2>Orders</h2>
+          <p>Manage customer payments and activation status.</p>
+        </div>
+
+        <div class="actions">
+
+          <input
+            id="searchInput"
+            class="search"
+            placeholder="Search order, name, email..."
+          >
+
+          <button id="refreshBtn" class="refresh">
+            ↻ Refresh Orders
+          </button>
+
+        </div>
+
+      </div>
+
+      <div id="ordersResult"></div>
+
+      <div class="table-wrap">
+
+        <table>
+
+          <thead>
+
+            <tr>
+              <th>Order</th>
+              <th>Customer</th>
+              <th>Email</th>
+              <th>TradingView</th>
+              <th>Plan</th>
+              <th>Payment</th>
+              <th>Transaction</th>
+              <th>Status</th>
+              <th>Created</th>
+            </tr>
+
+          </thead>
+
+          <tbody id="ordersTable"></tbody>
+
+        </table>
+
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <footer>
+    ◆ INDICATOR STORE · Admin Dashboard · © 2026
+  </footer>
+
+</div>
+
+
 <script>
-  const $ = (id) => document.getElementById(id);
 
-  let adminKey = "";
+const $ = (id) => document.getElementById(id);
 
-  const statuses = [
-    "Pending",
-    "Payment Verified",
-    "Activated",
-    "Completed"
-  ];
+let adminKey = "";
+let allOrders = [];
 
-  $("loginBtn").addEventListener("click", async () => {
+const statuses = [
+  "Pending",
+  "Payment Verified",
+  "Activated",
+  "Completed"
+];
 
-    const key = $("adminKey").value.trim();
 
-    if (!key) {
-      $("loginResult").innerHTML =
-        '<div class="error">Admin Key দিন।</div>';
+/* LOGIN */
+
+$("loginBtn").addEventListener("click", async () => {
+
+  const key = $("adminKey").value.trim();
+
+  if (!key) {
+
+    $("loginResult").innerHTML =
+      '<div class="error">Please enter your Admin Key.</div>';
+
+    return;
+  }
+
+  adminKey = key;
+
+  $("loginResult").innerHTML =
+    '<div style="color:#94a3b8;margin-top:12px">Checking...</div>';
+
+  try {
+
+    const response = await fetch("/api/admin/orders", {
+      method:"GET",
+      headers:{
+        "X-Admin-Key":adminKey
+      }
+    });
+
+    const data = await response.json();
+
+    if (!response.ok) {
+
+      adminKey = "";
+
+      throw new Error(
+        data.error || "Login failed"
+      );
+    }
+
+    $("loginCard").classList.add("hidden");
+
+    $("adminPanel").classList.remove("hidden");
+
+    $("logoutBtn").classList.remove("hidden");
+
+    $("loginResult").innerHTML = "";
+
+    allOrders = data.orders || [];
+
+    renderOrders(allOrders);
+
+  }
+
+  catch(error){
+
+    $("loginResult").innerHTML =
+      '<div class="error">' +
+      esc(error.message) +
+      '</div>';
+
+  }
+
+});
+
+
+/* REFRESH */
+
+$("refreshBtn").addEventListener(
+  "click",
+  loadOrders
+);
+
+
+async function loadOrders(){
+
+  $("ordersResult").innerHTML =
+    '<div style="padding:12px 20px;color:#94a3b8">Loading orders...</div>';
+
+  try{
+
+    const response = await fetch(
+      "/api/admin/orders",
+      {
+        headers:{
+          "X-Admin-Key":adminKey
+        }
+      }
+    );
+
+    const data = await response.json();
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error || "Failed to load orders"
+      );
+    }
+
+    allOrders = data.orders || [];
+
+    renderOrders(allOrders);
+
+    $("ordersResult").innerHTML =
+      '<div class="success" style="margin:0;border-radius:0">' +
+      "✓ Orders refreshed successfully" +
+      '</div>';
+
+    setTimeout(() => {
+      $("ordersResult").innerHTML = "";
+    },2000);
+
+  }
+
+  catch(error){
+
+    $("ordersResult").innerHTML =
+      '<div class="error">' +
+      esc(error.message) +
+      '</div>';
+
+  }
+
+}
+
+
+/* SEARCH */
+
+$("searchInput").addEventListener(
+  "input",
+  function(){
+
+    const q = this.value.toLowerCase().trim();
+
+    if(!q){
+
+      renderOrders(allOrders);
+
       return;
     }
 
-    adminKey = key;
+    const filtered = allOrders.filter(order => {
 
-    $("loginResult").innerHTML =
-      '<div>Checking...</div>';
+      return [
+        order.order_id,
+        order.name,
+        order.email,
+        order.tradingview_username,
+        order.plan,
+        order.payment_method,
+        order.transaction_id,
+        order.status
+      ]
+      .join(" ")
+      .toLowerCase()
+      .includes(q);
 
-    try {
+    });
 
-      const response = await fetch("/api/admin/orders", {
-        method: "GET",
-        headers: {
-          "X-Admin-Key": adminKey
-        }
-      });
+    renderOrders(filtered);
 
-      const data = await response.json();
-
-      if (!response.ok) {
-        adminKey = "";
-
-        throw new Error(
-          data.error || "Login failed"
-        );
-      }
-
-      $("loginCard").classList.add("hidden");
-      $("adminPanel").classList.remove("hidden");
-      $("logoutBtn").classList.remove("hidden");
-
-      $("loginResult").innerHTML = "";
-
-      renderOrders(data.orders || []);
-
-    } catch (error) {
-
-      $("loginResult").innerHTML =
-        '<div class="error">' +
-        esc(error.message) +
-        '</div>';
-    }
-  });
+  }
+);
 
 
-  $("refreshBtn").addEventListener("click", loadOrders);
+/* RENDER */
 
+function renderOrders(orders){
 
-  async function loadOrders() {
+  const table = $("ordersTable");
 
-    $("ordersResult").innerHTML =
-      "<div>Loading...</div>";
+  table.innerHTML = "";
 
-    try {
+  updateStats(orders);
 
-      const response = await fetch(
-        "/api/admin/orders",
-        {
-          headers: {
-            "X-Admin-Key": adminKey
-          }
-        }
-      );
+  if(!orders.length){
 
-      const data = await response.json();
+    table.innerHTML = `
+      <tr>
+        <td colspan="9">
+          <div class="empty">
+            <div class="empty-icon">📭</div>
+            <div>No orders found.</div>
+          </div>
+        </td>
+      </tr>
+    `;
 
-      if (!response.ok) {
-        throw new Error(
-          data.error || "Failed to load orders"
-        );
-      }
-
-      renderOrders(data.orders || []);
-
-      $("ordersResult").innerHTML =
-        '<div class="success">' +
-        "Orders loaded: " +
-        data.orders.length +
-        "</div>";
-
-    } catch (error) {
-
-      $("ordersResult").innerHTML =
-        '<div class="error">' +
-        esc(error.message) +
-        "</div>";
-    }
+    return;
   }
 
 
-  function renderOrders(orders) {
+  orders.forEach(order => {
 
-    const table = $("ordersTable");
+    const tr = document.createElement("tr");
 
-    table.innerHTML = "";
+    const statusClass =
+      getStatusClass(order.status);
 
-    if (!orders.length) {
 
-      table.innerHTML =
-        '<tr><td colspan="9">No orders found.</td></tr>';
+    tr.innerHTML = `
 
-      return;
-    }
+      <td>
+        <div class="order-id">
+          ${esc(order.order_id)}
+        </div>
+      </td>
 
-    orders.forEach(order => {
 
-      const tr = document.createElement("tr");
-
-      tr.innerHTML = `
-        <td>
-          <strong>${esc(order.order_id)}</strong>
-        </td>
-
-        <td>
+      <td>
+        <strong>
           ${esc(order.name)}
-        </td>
+        </strong>
+      </td>
 
-        <td>
+
+      <td>
+        <span class="email">
           ${esc(order.email)}
-        </td>
+        </span>
+      </td>
 
-        <td>
-          ${esc(order.tradingview_username)}
-        </td>
 
-        <td>
+      <td>
+        ${esc(order.tradingview_username)}
+      </td>
+
+
+      <td>
+        <span class="plan">
           ${esc(order.plan)}
-        </td>
+        </span>
+      </td>
 
-        <td>
+
+      <td>
+        <span class="payment">
           ${esc(order.payment_method)}
-        </td>
+        </span>
+      </td>
 
-        <td>
+
+      <td>
+        <span class="trx">
           ${esc(order.transaction_id)}
-        </td>
+        </span>
+      </td>
 
-        <td>
-          <select class="statusSelect">
+
+      <td>
+
+        <div class="status-box">
+
+          <select class="status-select">
+
             ${statuses.map(status => `
+
               <option
                 value="${esc(status)}"
                 ${status === order.status ? "selected" : ""}
               >
                 ${esc(status)}
               </option>
+
             `).join("")}
+
           </select>
 
-          <button class="saveBtn">
+          <button class="save-btn">
             Save
           </button>
-        </td>
 
-        <td>
-          ${esc(order.created_at)}
-        </td>
-      `;
+        </div>
 
-      const select = tr.querySelector(".statusSelect");
-      const saveBtn = tr.querySelector(".saveBtn");
+        <div style="margin-top:7px">
+          <span class="badge ${statusClass}">
+            ${esc(order.status)}
+          </span>
+        </div>
 
-      saveBtn.addEventListener("click", () => {
+      </td>
+
+
+      <td>
+        <span class="email">
+          ${esc(formatDate(order.created_at))}
+        </span>
+      </td>
+
+    `;
+
+
+    const select =
+      tr.querySelector(".status-select");
+
+    const saveBtn =
+      tr.querySelector(".save-btn");
+
+
+    select.addEventListener(
+      "change",
+      () => {
+
+        tr.querySelector(".badge").className =
+          "badge " +
+          getStatusClass(select.value);
+
+        tr.querySelector(".badge").textContent =
+          select.value;
+
+      }
+    );
+
+
+    saveBtn.addEventListener(
+      "click",
+      () => {
 
         updateStatus(
           order.order_id,
@@ -364,93 +976,244 @@
           saveBtn
         );
 
-      });
-
-      table.appendChild(tr);
-    });
-  }
-
-
-  async function updateStatus(orderId, status, button) {
-
-    button.disabled = true;
-    button.textContent = "Saving...";
-
-    try {
-
-      const response = await fetch(
-        "/api/admin/orders/" +
-        encodeURIComponent(orderId),
-        {
-          method: "PATCH",
-
-          headers: {
-            "Content-Type": "application/json",
-            "X-Admin-Key": adminKey
-          },
-
-          body: JSON.stringify({
-            status: status
-          })
-        }
-      );
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(
-          data.error || "Update failed"
-        );
       }
-
-      button.textContent = "Saved ✓";
-
-      setTimeout(() => {
-        button.textContent = "Save";
-      }, 1500);
-
-    } catch (error) {
-
-      alert(error.message);
-
-      button.textContent = "Save";
-
-    } finally {
-
-      button.disabled = false;
-    }
-  }
+    );
 
 
-  $("logoutBtn").addEventListener("click", () => {
-
-    adminKey = "";
-
-    $("adminPanel").classList.add("hidden");
-    $("logoutBtn").classList.add("hidden");
-    $("loginCard").classList.remove("hidden");
-
-    $("adminKey").value = "";
-    $("ordersTable").innerHTML = "";
-    $("loginResult").innerHTML = "";
+    table.appendChild(tr);
 
   });
 
+}
 
-  function esc(value) {
 
-    return String(value ?? "").replace(
+/* STATS */
+
+function updateStats(orders){
+
+  $("totalOrders").textContent =
+    orders.length;
+
+  $("pendingOrders").textContent =
+    orders.filter(
+      o => o.status === "Pending"
+    ).length;
+
+  $("activatedOrders").textContent =
+    orders.filter(
+      o => o.status === "Activated"
+    ).length;
+
+  $("completedOrders").textContent =
+    orders.filter(
+      o => o.status === "Completed"
+    ).length;
+
+}
+
+
+/* UPDATE STATUS */
+
+async function updateStatus(
+  orderId,
+  status,
+  button
+){
+
+  button.disabled = true;
+
+  button.textContent = "Saving...";
+
+
+  try{
+
+    const response = await fetch(
+      "/api/admin/orders/" +
+      encodeURIComponent(orderId),
+      {
+        method:"PATCH",
+
+        headers:{
+          "Content-Type":"application/json",
+          "X-Admin-Key":adminKey
+        },
+
+        body:JSON.stringify({
+          status:status
+        })
+      }
+    );
+
+
+    const data =
+      await response.json();
+
+
+    if(!response.ok){
+
+      throw new Error(
+        data.error || "Update failed"
+      );
+
+    }
+
+
+    button.textContent =
+      "Saved ✓";
+
+
+    const order =
+      allOrders.find(
+        o => o.order_id === orderId
+      );
+
+
+    if(order){
+
+      order.status = status;
+
+    }
+
+
+    updateStats(allOrders);
+
+
+    setTimeout(() => {
+
+      button.textContent =
+        "Save";
+
+    },1500);
+
+  }
+
+  catch(error){
+
+    alert(error.message);
+
+    button.textContent =
+      "Save";
+
+  }
+
+  finally{
+
+    button.disabled = false;
+
+  }
+
+}
+
+
+/* LOGOUT */
+
+$("logoutBtn").addEventListener(
+  "click",
+  () => {
+
+    adminKey = "";
+
+    allOrders = [];
+
+    $("adminPanel")
+      .classList.add("hidden");
+
+    $("logoutBtn")
+      .classList.add("hidden");
+
+    $("loginCard")
+      .classList.remove("hidden");
+
+    $("adminKey").value = "";
+
+    $("searchInput").value = "";
+
+    $("ordersTable").innerHTML = "";
+
+    $("loginResult").innerHTML = "";
+
+  }
+);
+
+
+/* STATUS CLASS */
+
+function getStatusClass(status){
+
+  if(status === "Pending")
+    return "pending";
+
+  if(status === "Payment Verified")
+    return "verified";
+
+  if(status === "Activated")
+    return "activated";
+
+  if(status === "Completed")
+    return "completed";
+
+  return "pending";
+
+}
+
+
+/* DATE */
+
+function formatDate(value){
+
+  if(!value)
+    return "";
+
+  try{
+
+    return new Date(value)
+      .toLocaleString();
+
+  }
+
+  catch{
+
+    return value;
+
+  }
+
+}
+
+
+/* ESCAPE HTML */
+
+function esc(value){
+
+  return String(value ?? "")
+    .replace(
       /[&<>"']/g,
       char => ({
-        "&": "&amp;",
-        "<": "&lt;",
-        ">": "&gt;",
-        '"': "&quot;",
-        "'": "&#039;"
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
       })[char]
     );
 
+}
+
+
+/* ENTER KEY LOGIN */
+
+$("adminKey").addEventListener(
+  "keydown",
+  e => {
+
+    if(e.key === "Enter"){
+
+      $("loginBtn").click();
+
+    }
+
   }
+);
+
 </script>
 
 </body>
