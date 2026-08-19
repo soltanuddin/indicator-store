@@ -1,10 +1,11 @@
 <!doctype html>
-
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Indicator Store — Premium Trading Tools</title><style>
+<title>Indicator Store — Premium Trading Tools</title>
+
+<style>
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{
@@ -20,26 +21,34 @@ button,input,select,textarea{font:inherit}
 .nav{
   position:sticky;
   top:0;
-  z-index:100;
+  z-index:1000;
   display:flex;
   align-items:center;
   justify-content:space-between;
-  padding:16px 5%;
+  gap:20px;
+  padding:17px 5%;
   background:rgba(5,5,7,.88);
-  backdrop-filter:blur(18px);
+  backdrop-filter:blur(20px);
   border-bottom:1px solid #202027
 }
+
 .logo{
   font-weight:900;
-  letter-spacing:.5px
+  letter-spacing:.5px;
+  white-space:nowrap
 }
+
 .logo b{color:#a855f7}
+
 .navlinks{
   display:flex;
   gap:28px;
-  color:#aaa
+  color:#aaa;
+  font-size:14px
 }
+
 .navlinks a:hover{color:#fff}
+
 .navbtn{
   padding:10px 18px;
   border-radius:9px;
@@ -49,7 +58,7 @@ button,input,select,textarea{font:inherit}
 }
 
 .hero{
-  min-height:700px;
+  min-height:720px;
   padding:100px 7%;
   display:grid;
   grid-template-columns:1.05fr .95fr;
@@ -59,6 +68,7 @@ button,input,select,textarea{font:inherit}
     radial-gradient(circle at 75% 30%,rgba(168,85,247,.20),transparent 35%),
     radial-gradient(circle at 20% 80%,rgba(59,130,246,.10),transparent 30%)
 }
+
 .badge{
   display:inline-flex;
   padding:7px 13px;
@@ -68,27 +78,32 @@ button,input,select,textarea{font:inherit}
   font-size:13px;
   font-weight:800
 }
+
 .hero h1{
   font-size:clamp(48px,7vw,86px);
   line-height:1.02;
   margin:22px 0
 }
+
 .gradient{
   background:linear-gradient(90deg,#fff,#c084fc,#8b5cf6);
   -webkit-background-clip:text;
   color:transparent
 }
+
 .hero p{
   max-width:650px;
   color:#aaa;
   font-size:18px
 }
+
 .actions{
   display:flex;
   gap:12px;
   flex-wrap:wrap;
   margin-top:30px
 }
+
 .btn{
   border:1px solid #34343e;
   background:#111116;
@@ -96,14 +111,19 @@ button,input,select,textarea{font:inherit}
   padding:13px 22px;
   border-radius:10px;
   cursor:pointer;
-  font-weight:800
+  font-weight:800;
+  transition:.2s
 }
+
 .btn.primary{
   background:#fff;
   color:#000;
   border-color:#fff
 }
-.btn:hover{transform:translateY(-1px)}
+
+.btn:hover{
+  transform:translateY(-2px)
+}
 
 .chart{
   border:1px solid #292932;
@@ -112,13 +132,16 @@ button,input,select,textarea{font:inherit}
   background:linear-gradient(145deg,#101014,#08080b);
   box-shadow:0 30px 80px rgba(0,0,0,.45)
 }
+
 .charttop{
   display:flex;
   justify-content:space-between;
   color:#888;
   font-size:12px
 }
+
 .live{color:#4ade80}
+
 .chartarea{
   height:350px;
   margin-top:20px;
@@ -130,12 +153,14 @@ button,input,select,textarea{font:inherit}
     linear-gradient(90deg,#191920 1px,transparent 1px);
   background-size:50px 50px
 }
+
 .chartline{
   position:absolute;
   inset:0;
   width:100%;
   height:100%
 }
+
 .signal{
   position:absolute;
   padding:6px 10px;
@@ -143,11 +168,13 @@ button,input,select,textarea{font:inherit}
   font-size:11px;
   font-weight:900
 }
+
 .buy{
   left:24%;
   bottom:27%;
   background:#16a34a
 }
+
 .sell{
   right:19%;
   top:23%;
@@ -159,56 +186,69 @@ button,input,select,textarea{font:inherit}
   max-width:1400px;
   margin:auto
 }
+
 .center{text-align:center}
+
 .kicker{
   color:#a855f7;
   font-size:12px;
   font-weight:900;
   letter-spacing:2px
 }
+
 .section h2{
   font-size:clamp(35px,5vw,58px);
   line-height:1.1;
   margin:12px 0
 }
+
 .muted{color:#92929d}
 
-.toggle{
-  display:flex;
-  width:max-content;
-  margin:35px auto;
-  padding:5px;
-  border:1px solid #292932;
-  background:#0d0d11;
-  border-radius:12px
-}
-.toggle button{
-  border:0;
-  background:transparent;
-  color:#aaa;
-  padding:12px 22px;
-  border-radius:8px;
-  cursor:pointer;
-  font-weight:800
-}
-.toggle button.active{
-  background:#fff;
-  color:#000
-}
-
 .sale{
-  margin:20px auto;
+  margin:35px auto 20px;
   max-width:850px;
-  padding:14px;
+  padding:15px;
   border:1px solid #43206b;
   border-radius:12px;
   background:#140b1f;
   text-align:center;
   color:#d8b4fe
 }
+
 #countdown{
   color:#fff;
   font-weight:900
+}
+
+.billing{
+  display:flex;
+  width:max-content;
+  margin:28px auto 45px;
+  padding:5px;
+  border:1px solid #292932;
+  background:#0d0d11;
+  border-radius:12px
+}
+
+.billing button{
+  border:0;
+  background:transparent;
+  color:#aaa;
+  padding:12px 24px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:800
+}
+
+.billing button.active{
+  background:#fff;
+  color:#000
+}
+
+.billing .save{
+  color:#4ade80;
+  font-size:10px;
+  margin-left:5px
 }
 
 .pricing{
@@ -218,17 +258,25 @@ button,input,select,textarea{font:inherit}
   max-width:1050px;
   margin:auto
 }
+
 .pricecard{
   position:relative;
-  padding:34px;
+  padding:35px;
   border:1px solid #292932;
-  border-radius:20px;
-  background:linear-gradient(145deg,#101014,#08080b)
+  border-radius:22px;
+  background:linear-gradient(145deg,#101014,#08080b);
+  transition:.3s
 }
+
+.pricecard:hover{
+  transform:translateY(-5px)
+}
+
 .pricecard.featured{
   border-color:#8b5cf6;
-  box-shadow:0 0 50px rgba(139,92,246,.12)
+  box-shadow:0 0 55px rgba(139,92,246,.13)
 }
+
 .popular{
   position:absolute;
   top:18px;
@@ -239,43 +287,57 @@ button,input,select,textarea{font:inherit}
   font-size:11px;
   font-weight:900
 }
+
 .off{
   color:#4ade80;
   font-weight:900;
   font-size:13px
 }
+
 .price{
   font-size:48px;
   font-weight:900;
-  margin:10px 0
+  margin:12px 0
 }
+
+.price small{
+  color:#888;
+  font-size:14px;
+  font-weight:500
+}
+
 .old{
   color:#666;
   text-decoration:line-through;
   font-size:16px;
   margin-left:8px
 }
-.price small{
-  color:#888;
-  font-size:14px;
-  font-weight:500
+
+.billing-note{
+  color:#777;
+  font-size:13px;
+  min-height:22px
 }
+
 .features{
   list-style:none;
   padding:0;
   margin:25px 0
 }
+
 .features li{
   padding:9px 0;
   color:#bbb;
   border-bottom:1px solid #18181e
 }
+
 .features li::before{
   content:"✓";
   color:#a855f7;
   font-weight:900;
   margin-right:10px
 }
+
 .full{width:100%}
 
 .steps{
@@ -284,16 +346,19 @@ button,input,select,textarea{font:inherit}
   gap:18px;
   margin-top:45px
 }
+
 .step{
   padding:25px;
   border:1px solid #25252c;
   border-radius:16px;
   background:#0c0c10
 }
+
 .step b{
   color:#a855f7;
   font-size:24px
 }
+
 .step p{color:#888}
 
 .orderbox{
@@ -304,16 +369,36 @@ button,input,select,textarea{font:inherit}
   border-radius:20px;
   background:#0b0b0f
 }
+
+.payment{
+  padding:20px;
+  margin-bottom:25px;
+  border:1px solid #292932;
+  border-radius:13px;
+  background:#08080b
+}
+
+.payment strong{
+  color:#c084fc
+}
+
+.payment-method{
+  margin-top:10px;
+  color:#aaa
+}
+
 .form{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:16px
 }
+
 label{
   color:#aaa;
   font-size:13px;
   font-weight:700
 }
+
 input,select,textarea{
   display:block;
   width:100%;
@@ -325,32 +410,52 @@ input,select,textarea{
   border-radius:9px;
   outline:none
 }
-input:focus,select:focus,textarea:focus{
+
+input:focus,
+select:focus,
+textarea:focus{
   border-color:#8b5cf6
 }
-.wide{grid-column:1/-1}
 
-.payment{
-  padding:18px;
-  margin:5px 0;
-  border:1px solid #292932;
-  border-radius:12px;
-  background:#08080b
+.wide{
+  grid-column:1/-1
 }
-.payment strong{color:#c084fc}
+
+#result{
+  margin-top:20px
+}
+
+.result-success{
+  padding:18px;
+  border:1px solid #263d2c;
+  border-radius:10px;
+  color:#4ade80
+}
+
+.result-error{
+  padding:18px;
+  border:1px solid #4b2525;
+  border-radius:10px;
+  color:#f87171
+}
 
 .faq{
   max-width:950px
 }
+
 details{
   border-bottom:1px solid #292932;
   padding:20px 0
 }
+
 summary{
   cursor:pointer;
   font-weight:800
 }
-details p{color:#888}
+
+details p{
+  color:#888
+}
 
 .footer{
   padding:45px 7%;
@@ -363,287 +468,771 @@ details p{color:#888}
 }
 
 @media(max-width:900px){
-  .navlinks{display:none}
+
+  .navlinks{
+    display:none
+  }
+
   .hero{
     grid-template-columns:1fr;
     padding-top:70px
   }
-  .pricing{grid-template-columns:1fr}
-  .steps{grid-template-columns:1fr 1fr}
+
+  .pricing{
+    grid-template-columns:1fr
+  }
+
+  .steps{
+    grid-template-columns:1fr 1fr
+  }
 }
+
 @media(max-width:600px){
-  .section{padding:70px 5%}
-  .hero{padding:65px 5%}
-  .hero h1{font-size:48px}
-  .steps{grid-template-columns:1fr}
-  .form{grid-template-columns:1fr}
-  .wide{grid-column:auto}
-  .orderbox{padding:22px}
-  .navbtn{display:none}
+
+  .section{
+    padding:70px 5%
+  }
+
+  .hero{
+    padding:65px 5%
+  }
+
+  .hero h1{
+    font-size:48px
+  }
+
+  .steps{
+    grid-template-columns:1fr
+  }
+
+  .form{
+    grid-template-columns:1fr
+  }
+
+  .wide{
+    grid-column:auto
+  }
+
+  .orderbox{
+    padding:22px
+  }
+
+  .navbtn{
+    display:none
+  }
+
+  .price{
+    font-size:40px
+  }
 }
-</style></head><body><header class="nav">
-  <a class="logo" href="#home">◆ INDICATOR <b>STORE</b></a>  <nav class="navlinks">
+</style>
+</head>
+
+<body>
+
+<header class="nav">
+
+  <a class="logo" href="#home">
+    ◆ INDICATOR <b>STORE</b>
+  </a>
+
+  <nav class="navlinks">
     <a href="#products">Pricing</a>
     <a href="#how">How it works</a>
     <a href="#order">Order</a>
     <a href="#faq">FAQ</a>
-  </nav><a class="navbtn" href="#products">Get Started</a>
+  </nav>
 
-</header><section class="hero" id="home">  <div>
-    <span class="badge">● PREMIUM TRADING TOOLS</span><h1>
-  Trade smarter.<br>
-  <span class="gradient">Build your edge.</span>
-</h1>
+  <a class="navbtn" href="#products">
+    Get Started
+  </a>
 
-<p>
-  Advanced charting tools, AI-powered strategy building,
-  alerts and research tools designed for serious traders.
-</p>
+</header>
 
-<div class="actions">
-  <a class="btn primary" href="#products">View Plans →</a>
-  <a class="btn" href="#how">How It Works</a>
-</div>
 
-  </div>  <div class="chart">
+<section class="hero" id="home">
+
+  <div>
+
+    <span class="badge">
+      ● PREMIUM TRADING TOOLS
+    </span>
+
+    <h1>
+      Trade smarter.<br>
+      <span class="gradient">
+        Build your edge.
+      </span>
+    </h1>
+
+    <p>
+      Advanced charting tools, AI-powered strategy building,
+      alerts and research tools designed for serious traders.
+    </p>
+
+    <div class="actions">
+
+      <a class="btn primary" href="#products">
+        View Plans →
+      </a>
+
+      <a class="btn" href="#how">
+        How It Works
+      </a>
+
+    </div>
+
+  </div>
+
+
+  <div class="chart">
+
     <div class="charttop">
       <span>INDICATOR STORE • MARKET</span>
       <span class="live">● LIVE</span>
-    </div><div class="chartarea">
-  <svg class="chartline" viewBox="0 0 800 360" preserveAspectRatio="none">
-    <polyline
-      points="0,280 45,250 85,290 130,210 175,235 220,170 270,205 315,130 360,165 405,95 450,145 500,115 550,160 600,80 650,120 700,62 750,95 800,45"
-      fill="none"
-      stroke="#a855f7"
-      stroke-width="6"/>
-  </svg>
+    </div>
 
-  <span class="signal buy">BUY</span>
-  <span class="signal sell">SELL</span>
-</div>
+    <div class="chartarea">
 
-  </div></section><section class="section" id="products">  <div class="center">
-    <div class="kicker">PRICING</div>
-    <h2>Simple pricing. Powerful tools.</h2>
+      <svg class="chartline"
+        viewBox="0 0 800 360"
+        preserveAspectRatio="none">
+
+        <polyline
+          points="0,280 45,250 85,290 130,210 175,235 220,170 270,205 315,130 360,165 405,95 450,145 500,115 550,160 600,80 650,120 700,62 750,95 800,45"
+          fill="none"
+          stroke="#a855f7"
+          stroke-width="6"/>
+      </svg>
+
+      <span class="signal buy">
+        BUY
+      </span>
+
+      <span class="signal sell">
+        SELL
+      </span>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="products">
+
+  <div class="center">
+
+    <div class="kicker">
+      PRICING
+    </div>
+
+    <h2>
+      Simple pricing. Powerful tools.
+    </h2>
+
     <p class="muted">
       Choose monthly access or save with annual billing.
     </p>
-  </div>  <div class="sale">
-    ⚡ <b>LIMITED TIME OFFER</b> —
-    Pay yearly to get the best deal!
-    &nbsp; <span id="countdown">02:15:50:37</span>
-  </div>  <div class="toggle">
-    <button id="monthlyBtn" class="active">Monthly</button>
-    <button id="annualBtn">Annual</button>
-  </div>  <div class="pricing"><article class="pricecard">
 
-  <div class="off">10% OFF</div>
-
-  <h3>Premium</h3>
-
-  <p class="muted">
-    Start trading with advanced charting tools + AI.
-  </p>
-
-  <div class="price">
-    <span id="premiumPrice">$61.19</span>
-    <small id="premiumPeriod">/mo</small>
-    <span class="old">$67.99</span>
   </div>
 
-  <ul class="features">
-    <li>Premium TradingView indicators & scanners</li>
-    <li>Advanced alert systems</li>
-    <li>Build indicators & strategies with AI</li>
-    <li>5,000 AI credits every month</li>
-    <li>Auto-debugging Pine Script® with Quant</li>
-    <li>Exclusive Discord community with alerts</li>
-  </ul>
 
-  <button class="btn primary full choose" data-plan="Premium">
-    Get Premium
-  </button>
+  <div class="sale">
 
-</article>
+    ⚡ <b>LIMITED TIME OFFER</b>
+    — Pay yearly to get the best deal!
 
-<article class="pricecard featured">
+    &nbsp;
 
-  <span class="popular">MOST POPULAR</span>
+    <span id="countdown">
+      02:15:50:37
+    </span>
 
-  <div class="off">20% OFF</div>
-
-  <h3>Ultimate</h3>
-
-  <p class="muted">
-    Full AI trading capabilities for advanced edge building.
-  </p>
-
-  <div class="price">
-    <span id="ultimatePrice">$95.99</span>
-    <small id="ultimatePeriod">/mo</small>
-    <span class="old">$119.99</span>
   </div>
 
-  <ul class="features">
-    <li>Everything in Premium</li>
-    <li>25,000 AI credits every month</li>
-    <li>AI automation capabilities</li>
-    <li>Auto-debugging Pine Script® with Quant</li>
-    <li>Create alerts from AI trading strategies</li>
-    <li>Auto-replicate AI strategies on TradingView</li>
-    <li>Strategy community with templates</li>
-  </ul>
 
-  <button class="btn primary full choose" data-plan="Ultimate">
-    Get Ultimate
-  </button>
+  <div class="billing">
 
-</article>
+    <button
+      id="monthlyBtn"
+      class="active">
 
-  </div></section><section class="section" id="how">  <div class="center">
-    <div class="kicker">PROCESS</div>
-    <h2>How it works</h2>
-  </div>  <div class="steps"><div class="step">
-  <b>01</b>
-  <h3>Choose Plan</h3>
-  <p>Select Premium or Ultimate and choose your billing period.</p>
-</div>
+      Monthly
 
-<div class="step">
-  <b>02</b>
-  <h3>Pay</h3>
-  <p>Complete payment using the available payment method.</p>
-</div>
+    </button>
 
-<div class="step">
-  <b>03</b>
-  <h3>Submit Details</h3>
-  <p>Submit your TradingView username and transaction ID.</p>
-</div>
+    <button id="annualBtn">
 
-<div class="step">
-  <b>04</b>
-  <h3>Activation</h3>
-  <p>Your payment is reviewed before activation.</p>
-</div>
+      Annual
 
-  </div></section><section class="section" id="order">  <div class="center">
-    <div class="kicker">ORDER</div>
-    <h2>Start your subscription</h2>
-    <p class="muted">Choose your plan and submit your payment details.</p>
-  </div>  <div class="orderbox"><div class="payment">
-  <strong>Payment</strong><br>
-  Available methods: Nagad + Binance Pay
-</div>
+      <span class="save">
+        BEST VALUE
+      </span>
 
-<br>
+    </button>
 
-<form class="form" id="orderForm">
+  </div>
 
-  <label>
-    Full Name
-    <input id="name" required>
-  </label>
 
-  <label>
-    Email
-    <input id="email" type="email" required>
-  </label>
+  <div class="pricing">
 
-  <label>
-    TradingView Username
-    <input id="tv" required>
-  </label>
 
-  <label>
-    Plan
-    <select id="plan" required>
-      <option value="">Select plan</option>
-      <option>Premium</option>
-      <option>Ultimate</option>
-    </select>
-  </label>
+    <!-- PREMIUM -->
 
-  <label>
-    Billing
-    <select id="billing" required>
-      <option value="">Select billing</option>
-      <option>Monthly</option>
-      <option>Annual</option>
-    </select>
-  </label>
+    <article class="pricecard">
 
-  <label>
-    Payment Method
-    <select id="payment" required>
-      <option value="">Select payment</option>
-      <option>Nagad</option>
-      <option>Binance Pay</option>
-    </select>
-  </label>
+      <div class="off">
+        10% OFF
+      </div>
 
-  <label>
-    Transaction ID
-    <input id="trx" required>
-  </label>
+      <h3>
+        Premium
+      </h3>
 
-  <label>
-    Message
-    <textarea id="message" rows="4"></textarea>
-  </label>
+      <p class="muted">
+        Start trading with advanced charting tools + AI.
+      </p>
 
-  <button class="btn primary wide" type="submit">
-    Submit Order →
-  </button>
+      <div class="price">
 
-</form>
+        <span id="premiumPrice">
+          $61.19
+        </span>
 
-<div id="result"></div>
+        <small id="premiumPeriod">
+          / first month
+        </small>
 
-  </div></section><section class="section faq" id="faq">  <div class="center">
-    <div class="kicker">FAQ</div>
-    <h2>Questions, answered.</h2>
-  </div>  <details>
-    <summary>Which plan should I choose?</summary>
-    <p>
-      Premium is designed for traders who need the core indicator,
-      scanner, alert and AI features. Ultimate adds advanced AI
-      automation and strategy tools.
+        <span class="old" id="premiumOld">
+          $67.99
+        </span>
+
+      </div>
+
+      <div class="billing-note" id="premiumNote">
+        Then $67.99 / month
+      </div>
+
+      <ul class="features">
+
+        <li>
+          Premium TradingView indicators & scanners
+        </li>
+
+        <li>
+          Advanced alert systems
+        </li>
+
+        <li>
+          Build indicators & strategies with AI
+        </li>
+
+        <li>
+          5,000 AI credits every month
+        </li>
+
+        <li>
+          Auto-debugging Pine Script® with Quant
+        </li>
+
+        <li>
+          Exclusive Discord community with alerts
+        </li>
+
+      </ul>
+
+      <button
+        class="btn primary full choose"
+        data-plan="Premium">
+
+        Get Premium
+
+      </button>
+
+    </article>
+
+
+    <!-- ULTIMATE -->
+
+    <article class="pricecard featured">
+
+      <span class="popular">
+        MOST POPULAR
+      </span>
+
+      <div class="off">
+        20% OFF
+      </div>
+
+      <h3>
+        Ultimate
+      </h3>
+
+      <p class="muted">
+        Full AI trading capabilities for advanced edge building.
+      </p>
+
+      <div class="price">
+
+        <span id="ultimatePrice">
+          $95.99
+        </span>
+
+        <small id="ultimatePeriod">
+          / first month
+        </small>
+
+        <span class="old" id="ultimateOld">
+          $119.99
+        </span>
+
+      </div>
+
+      <div class="billing-note" id="ultimateNote">
+        Then $119.99 / month
+      </div>
+
+      <ul class="features">
+
+        <li>
+          Everything in Premium
+        </li>
+
+        <li>
+          25,000 AI credits every month
+        </li>
+
+        <li>
+          AI automation capabilities
+        </li>
+
+        <li>
+          Auto-debugging Pine Script® with Quant
+        </li>
+
+        <li>
+          Create alerts from AI trading strategies
+        </li>
+
+        <li>
+          Auto-replicate AI strategies on TradingView
+        </li>
+
+        <li>
+          Strategy community with templates
+        </li>
+
+      </ul>
+
+      <button
+        class="btn primary full choose"
+        data-plan="Ultimate">
+
+        Get Ultimate
+
+      </button>
+
+    </article>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="how">
+
+  <div class="center">
+
+    <div class="kicker">
+      PROCESS
+    </div>
+
+    <h2>
+      How it works
+    </h2>
+
+  </div>
+
+
+  <div class="steps">
+
+    <div class="step">
+
+      <b>01</b>
+
+      <h3>
+        Choose Plan
+      </h3>
+
+      <p>
+        Select Premium or Ultimate and choose your billing period.
+      </p>
+
+    </div>
+
+
+    <div class="step">
+
+      <b>02</b>
+
+      <h3>
+        Pay
+      </h3>
+
+      <p>
+        Complete payment using the available payment method.
+      </p>
+
+    </div>
+
+
+    <div class="step">
+
+      <b>03</b>
+
+      <h3>
+        Submit Details
+      </h3>
+
+      <p>
+        Submit your TradingView username and transaction ID.
+      </p>
+
+    </div>
+
+
+    <div class="step">
+
+      <b>04</b>
+
+      <h3>
+        Activation
+      </h3>
+
+      <p>
+        Your payment is reviewed before activation.
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="section" id="order">
+
+  <div class="center">
+
+    <div class="kicker">
+      ORDER
+    </div>
+
+    <h2>
+      Start your subscription
+    </h2>
+
+    <p class="muted">
+      Choose your plan and submit your payment details.
     </p>
-  </details>  <details>
-    <summary>What is the difference between Monthly and Annual?</summary>
+
+  </div>
+
+
+  <div class="orderbox">
+
+    <div class="payment">
+
+      <strong>
+        Payment Methods
+      </strong>
+
+      <div class="payment-method">
+        Nagad + Binance Pay
+      </div>
+
+    </div>
+
+
+    <form class="form" id="orderForm">
+
+
+      <label>
+
+        Full Name
+
+        <input
+          id="name"
+          autocomplete="name"
+          required>
+
+      </label>
+
+
+      <label>
+
+        Email
+
+        <input
+          id="email"
+          type="email"
+          autocomplete="email"
+          required>
+
+      </label>
+
+
+      <label>
+
+        TradingView Username
+
+        <input
+          id="tv"
+          required>
+
+      </label>
+
+
+      <label>
+
+        Plan
+
+        <select id="plan" required>
+
+          <option value="">
+            Select plan
+          </option>
+
+          <option value="Premium">
+            Premium
+          </option>
+
+          <option value="Ultimate">
+            Ultimate
+          </option>
+
+        </select>
+
+      </label>
+
+
+      <label>
+
+        Billing
+
+        <select id="billing" required>
+
+          <option value="">
+            Select billing
+          </option>
+
+          <option value="Monthly">
+            Monthly
+          </option>
+
+          <option value="Annual">
+            Annual
+          </option>
+
+        </select>
+
+      </label>
+
+
+      <label>
+
+        Payment Method
+
+        <select id="payment" required>
+
+          <option value="">
+            Select payment
+          </option>
+
+          <option value="Nagad">
+            Nagad
+          </option>
+
+          <option value="Binance Pay">
+            Binance Pay
+          </option>
+
+        </select>
+
+      </label>
+
+
+      <label>
+
+        Transaction ID
+
+        <input
+          id="trx"
+          required>
+
+      </label>
+
+
+      <label>
+
+        Message
+
+        <textarea
+          id="message"
+          rows="4"></textarea>
+
+      </label>
+
+
+      <button
+        class="btn primary wide"
+        type="submit">
+
+        Submit Order →
+
+      </button>
+
+    </form>
+
+
+    <div id="result"></div>
+
+  </div>
+
+</section>
+
+
+<section class="section faq" id="faq">
+
+  <div class="center">
+
+    <div class="kicker">
+      FAQ
+    </div>
+
+    <h2>
+      Questions, answered.
+    </h2>
+
+  </div>
+
+
+  <details>
+
+    <summary>
+      Which plan should I choose?
+    </summary>
+
     <p>
-      Monthly billing provides monthly access. Annual billing is
-      designed for customers who want longer-term access at the
-      advertised annual price.
+      Premium is designed for traders who need the core
+      indicator, scanner, alert and AI features.
+      Ultimate adds advanced AI automation and strategy tools.
     </p>
-  </details>  <details>
-    <summary>How does activation work?</summary>
+
+  </details>
+
+
+  <details>
+
+    <summary>
+      What is the difference between Monthly and Annual?
+    </summary>
+
     <p>
-      After submitting an order, payment and transaction information
-      are reviewed before activation.
+      Monthly billing provides monthly access.
+      Annual billing provides yearly access at the displayed
+      annual price.
     </p>
-  </details>  <details>
-    <summary>Can I track my order?</summary>
+
+  </details>
+
+
+  <details>
+
+    <summary>
+      How does activation work?
+    </summary>
+
     <p>
-      Yes. Your order ID can be used with the order-status system
-      configured on the website.
+      After submitting an order, payment and transaction
+      information are reviewed before activation.
     </p>
-  </details></section><footer class="footer">
-  <div>◆ INDICATOR STORE</div>
-  <div>© 2026 Indicator Store. All rights reserved.</div>
-</footer><script>
 
-const monthlyBtn = document.getElementById("monthlyBtn");
-const annualBtn = document.getElementById("annualBtn");
+  </details>
 
-const premiumPrice = document.getElementById("premiumPrice");
-const ultimatePrice = document.getElementById("ultimatePrice");
 
-const premiumPeriod = document.getElementById("premiumPeriod");
-const ultimatePeriod = document.getElementById("ultimatePeriod");
+  <details>
 
-monthlyBtn.onclick = () => {
+    <summary>
+      Can I track my order?
+    </summary>
+
+    <p>
+      Yes. Your order ID can be used with the order-status
+      system configured on the website.
+    </p>
+
+  </details>
+
+</section>
+
+
+<footer class="footer">
+
+  <div>
+    ◆ INDICATOR STORE
+  </div>
+
+  <div>
+    © 2026 Indicator Store. All rights reserved.
+  </div>
+
+</footer>
+
+
+<script>
+
+/* =========================
+   PRICING
+========================= */
+
+const monthlyBtn =
+  document.getElementById("monthlyBtn");
+
+const annualBtn =
+  document.getElementById("annualBtn");
+
+const premiumPrice =
+  document.getElementById("premiumPrice");
+
+const ultimatePrice =
+  document.getElementById("ultimatePrice");
+
+const premiumPeriod =
+  document.getElementById("premiumPeriod");
+
+const ultimatePeriod =
+  document.getElementById("ultimatePeriod");
+
+const premiumOld =
+  document.getElementById("premiumOld");
+
+const ultimateOld =
+  document.getElementById("ultimateOld");
+
+const premiumNote =
+  document.getElementById("premiumNote");
+
+const ultimateNote =
+  document.getElementById("ultimateNote");
+
+const billingSelect =
+  document.getElementById("billing");
+
+
+function showMonthly(){
 
   monthlyBtn.classList.add("active");
   annualBtn.classList.remove("active");
@@ -651,30 +1240,63 @@ monthlyBtn.onclick = () => {
   premiumPrice.textContent = "$61.19";
   ultimatePrice.textContent = "$95.99";
 
-  premiumPeriod.textContent = "/mo";
-  ultimatePeriod.textContent = "/mo";
+  premiumPeriod.textContent = "/ first month";
+  ultimatePeriod.textContent = "/ first month";
 
-};
+  premiumOld.textContent = "$67.99";
+  ultimateOld.textContent = "$119.99";
 
-annualBtn.onclick = () => {
+  premiumNote.textContent =
+    "Then $67.99 / month";
+
+  ultimateNote.textContent =
+    "Then $119.99 / month";
+
+  billingSelect.value = "Monthly";
+}
+
+
+function showAnnual(){
 
   annualBtn.classList.add("active");
   monthlyBtn.classList.remove("active");
 
-  /*
-    Annual prices can be changed here after
-    you decide the exact yearly prices.
-  */
+  premiumPrice.textContent = "$809.08";
+  ultimatePrice.textContent = "$1,415.88";
 
-  premiumPrice.textContent = "$61.19";
-  ultimatePrice.textContent = "$95.99";
+  premiumPeriod.textContent = "/ year";
+  ultimatePeriod.textContent = "/ year";
 
-  premiumPeriod.textContent = "/yr";
-  ultimatePeriod.textContent = "/yr";
+  premiumOld.textContent = "";
+  ultimateOld.textContent = "";
 
-};
+  premiumNote.textContent =
+    "Annual access • 12 months";
 
-document.querySelectorAll(".choose").forEach(button => {
+  ultimateNote.textContent =
+    "Annual access • 12 months";
+
+  billingSelect.value = "Annual";
+}
+
+
+monthlyBtn.addEventListener(
+  "click",
+  showMonthly
+);
+
+annualBtn.addEventListener(
+  "click",
+  showAnnual
+);
+
+
+/* =========================
+   PLAN BUTTONS
+========================= */
+
+document.querySelectorAll(".choose")
+.forEach(button => {
 
   button.addEventListener("click", () => {
 
@@ -682,94 +1304,238 @@ document.querySelectorAll(".choose").forEach(button => {
       button.dataset.plan;
 
     document.getElementById("order")
-      .scrollIntoView({behavior:"smooth"});
+      .scrollIntoView({
+        behavior:"smooth"
+      });
 
   });
 
 });
 
 
-/* Countdown */
+/* =========================
+   COUNTDOWN
+========================= */
 
-let seconds = 2*86400 + 15*3600 + 50*60 + 37;
+let seconds =
+  2 * 86400 +
+  15 * 3600 +
+  50 * 60 +
+  37;
+
 
 function countdown(){
 
-  if(seconds <= 0) return;
+  if(seconds <= 0){
+    return;
+  }
 
   seconds--;
 
-  const d = Math.floor(seconds / 86400);
-  const h = Math.floor((seconds % 86400) / 3600);
-  const m = Math.floor((seconds % 3600) / 60);
-  const s = seconds % 60;
+  const d =
+    Math.floor(seconds / 86400);
 
-  document.getElementById("countdown").textContent =
+  const h =
+    Math.floor(
+      (seconds % 86400) / 3600
+    );
+
+  const m =
+    Math.floor(
+      (seconds % 3600) / 60
+    );
+
+  const s =
+    seconds % 60;
+
+  document.getElementById(
+    "countdown"
+  ).textContent =
+
     String(d).padStart(2,"0") + ":" +
     String(h).padStart(2,"0") + ":" +
     String(m).padStart(2,"0") + ":" +
     String(s).padStart(2,"0");
 }
 
-setInterval(countdown,1000);
+
+setInterval(
+  countdown,
+  1000
+);
 
 
-/* Order */
+/* =========================
+   ORDER SUBMISSION
+========================= */
 
-document.getElementById("orderForm").addEventListener("submit", async e => {
+document.getElementById(
+  "orderForm"
+).addEventListener(
+  "submit",
+  async e => {
 
-  e.preventDefault();
+    e.preventDefault();
 
-  const result = document.getElementById("result");
+    const result =
+      document.getElementById("result");
 
-  result.innerHTML =
-    "<p style='color:#c084fc'>Submitting order...</p>";
+    result.innerHTML =
+      "<p style='color:#c084fc'>Submitting order...</p>";
 
-  try{
 
-    const response = await fetch("/api/orders",{
-      method:"POST",
-      headers:{
-        "Content-Type":"application/json"
-      },
-      body:JSON.stringify({
+    try{
 
-        name:document.getElementById("name").value,
-        email:document.getElementById("email").value,
-        tradingview_username:document.getElementById("tv").value,
-        plan:document.getElementById("plan").value,
-        billing:document.getElementById("billing").value,
-        payment_method:document.getElementById("payment").value,
-        transaction_id:document.getElementById("trx").value,
-        message:document.getElementById("message").value
+      const response =
+        await fetch(
+          "/api/orders",
+          {
+            method:"POST",
 
-      })
-    });
+            headers:{
+              "Content-Type":
+                "application/json"
+            },
 
-    const data = await response.json();
+            body:JSON.stringify({
 
-    if(!response.ok){
-      throw new Error(data.error || "Order failed");
+              name:
+                document.getElementById(
+                  "name"
+                ).value.trim(),
+
+              email:
+                document.getElementById(
+                  "email"
+                ).value.trim(),
+
+              tradingview_username:
+                document.getElementById(
+                  "tv"
+                ).value.trim(),
+
+              plan:
+                document.getElementById(
+                  "plan"
+                ).value,
+
+              billing:
+                document.getElementById(
+                  "billing"
+                ).value,
+
+              payment_method:
+                document.getElementById(
+                  "payment"
+                ).value,
+
+              transaction_id:
+                document.getElementById(
+                  "trx"
+                ).value.trim(),
+
+              message:
+                document.getElementById(
+                  "message"
+                ).value.trim()
+
+            })
+          }
+        );
+
+
+      const data =
+        await response.json();
+
+
+      if(!response.ok){
+
+        throw new Error(
+          data.error ||
+          "Order submission failed"
+        );
+
+      }
+
+
+      result.innerHTML =
+
+        "<div class='result-success'>" +
+
+        "<b>Order submitted successfully ✓</b>" +
+
+        "<br><br>" +
+
+        "Your Order ID: <strong>" +
+
+        escapeHtml(
+          data.order_id
+        ) +
+
+        "</strong>" +
+
+        "<br><br>" +
+
+        "Please save this Order ID for tracking." +
+
+        "</div>";
+
+
+      e.target.reset();
+
+
+      window.scrollTo({
+        top:
+          document.getElementById(
+            "result"
+          ).offsetTop - 150,
+
+        behavior:"smooth"
+      });
+
+
+    }catch(error){
+
+      result.innerHTML =
+
+        "<div class='result-error'>" +
+
+        escapeHtml(
+          error.message
+        ) +
+
+        "</div>";
+
     }
 
-    result.innerHTML =
-      "<div style='margin-top:20px;padding:18px;border:1px solid #263d2c;border-radius:10px;color:#4ade80'>" +
-      "<b>Order submitted successfully ✓</b><br>" +
-      "Order ID: " + data.order_id +
-      "</div>";
-
-    e.target.reset();
-
-  }catch(error){
-
-    result.innerHTML =
-      "<div style='margin-top:20px;padding:18px;border:1px solid #4b2525;border-radius:10px;color:#f87171'>" +
-      error.message +
-      "</div>";
-
   }
+);
 
-});
 
-</script></body>
+/* =========================
+   SECURITY
+========================= */
+
+function escapeHtml(value){
+
+  return String(
+    value ?? ""
+  ).replace(
+    /[&<>"']/g,
+    char => ({
+
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+
+    })[char]
+  );
+
+}
+
+</script>
+
+</body>
 </html>
