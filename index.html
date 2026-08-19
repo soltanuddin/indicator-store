@@ -1,405 +1,775 @@
 <!doctype html>
-<html lang="bn">
+
+<html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Indicator Store</title>
-  <link rel="stylesheet" href="style.css">
-</head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Indicator Store — Premium Trading Tools</title><style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  font-family:Inter,Arial,sans-serif;
+  background:#050507;
+  color:#fff;
+  line-height:1.6
+}
+a{text-decoration:none;color:inherit}
+button,input,select,textarea{font:inherit}
 
-<body>
+.nav{
+  position:sticky;
+  top:0;
+  z-index:100;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:16px 5%;
+  background:rgba(5,5,7,.88);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid #202027
+}
+.logo{
+  font-weight:900;
+  letter-spacing:.5px
+}
+.logo b{color:#a855f7}
+.navlinks{
+  display:flex;
+  gap:28px;
+  color:#aaa
+}
+.navlinks a:hover{color:#fff}
+.navbtn{
+  padding:10px 18px;
+  border-radius:9px;
+  background:#fff;
+  color:#000;
+  font-weight:800
+}
 
-<header class="nav">
-  <a class="logo" href="#home">◆ INDICATOR <b>STORE</b></a>
+.hero{
+  min-height:700px;
+  padding:100px 7%;
+  display:grid;
+  grid-template-columns:1.05fr .95fr;
+  align-items:center;
+  gap:60px;
+  background:
+    radial-gradient(circle at 75% 30%,rgba(168,85,247,.20),transparent 35%),
+    radial-gradient(circle at 20% 80%,rgba(59,130,246,.10),transparent 30%)
+}
+.badge{
+  display:inline-flex;
+  padding:7px 13px;
+  border:1px solid #34343e;
+  border-radius:999px;
+  color:#c084fc;
+  font-size:13px;
+  font-weight:800
+}
+.hero h1{
+  font-size:clamp(48px,7vw,86px);
+  line-height:1.02;
+  margin:22px 0
+}
+.gradient{
+  background:linear-gradient(90deg,#fff,#c084fc,#8b5cf6);
+  -webkit-background-clip:text;
+  color:transparent
+}
+.hero p{
+  max-width:650px;
+  color:#aaa;
+  font-size:18px
+}
+.actions{
+  display:flex;
+  gap:12px;
+  flex-wrap:wrap;
+  margin-top:30px
+}
+.btn{
+  border:1px solid #34343e;
+  background:#111116;
+  color:#fff;
+  padding:13px 22px;
+  border-radius:10px;
+  cursor:pointer;
+  font-weight:800
+}
+.btn.primary{
+  background:#fff;
+  color:#000;
+  border-color:#fff
+}
+.btn:hover{transform:translateY(-1px)}
 
-  <button id="menu">☰</button>
+.chart{
+  border:1px solid #292932;
+  border-radius:22px;
+  padding:22px;
+  background:linear-gradient(145deg,#101014,#08080b);
+  box-shadow:0 30px 80px rgba(0,0,0,.45)
+}
+.charttop{
+  display:flex;
+  justify-content:space-between;
+  color:#888;
+  font-size:12px
+}
+.live{color:#4ade80}
+.chartarea{
+  height:350px;
+  margin-top:20px;
+  position:relative;
+  overflow:hidden;
+  border-radius:12px;
+  background:
+    linear-gradient(#191920 1px,transparent 1px),
+    linear-gradient(90deg,#191920 1px,transparent 1px);
+  background-size:50px 50px
+}
+.chartline{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%
+}
+.signal{
+  position:absolute;
+  padding:6px 10px;
+  border-radius:7px;
+  font-size:11px;
+  font-weight:900
+}
+.buy{
+  left:24%;
+  bottom:27%;
+  background:#16a34a
+}
+.sell{
+  right:19%;
+  top:23%;
+  background:#dc2626
+}
 
-  <nav id="links">
-    <a href="#home">Home</a>
-    <a href="#products">Products</a>
+.section{
+  padding:100px 7%;
+  max-width:1400px;
+  margin:auto
+}
+.center{text-align:center}
+.kicker{
+  color:#a855f7;
+  font-size:12px;
+  font-weight:900;
+  letter-spacing:2px
+}
+.section h2{
+  font-size:clamp(35px,5vw,58px);
+  line-height:1.1;
+  margin:12px 0
+}
+.muted{color:#92929d}
+
+.toggle{
+  display:flex;
+  width:max-content;
+  margin:35px auto;
+  padding:5px;
+  border:1px solid #292932;
+  background:#0d0d11;
+  border-radius:12px
+}
+.toggle button{
+  border:0;
+  background:transparent;
+  color:#aaa;
+  padding:12px 22px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:800
+}
+.toggle button.active{
+  background:#fff;
+  color:#000
+}
+
+.sale{
+  margin:20px auto;
+  max-width:850px;
+  padding:14px;
+  border:1px solid #43206b;
+  border-radius:12px;
+  background:#140b1f;
+  text-align:center;
+  color:#d8b4fe
+}
+#countdown{
+  color:#fff;
+  font-weight:900
+}
+
+.pricing{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:22px;
+  max-width:1050px;
+  margin:auto
+}
+.pricecard{
+  position:relative;
+  padding:34px;
+  border:1px solid #292932;
+  border-radius:20px;
+  background:linear-gradient(145deg,#101014,#08080b)
+}
+.pricecard.featured{
+  border-color:#8b5cf6;
+  box-shadow:0 0 50px rgba(139,92,246,.12)
+}
+.popular{
+  position:absolute;
+  top:18px;
+  right:18px;
+  padding:5px 10px;
+  border-radius:999px;
+  background:#8b5cf6;
+  font-size:11px;
+  font-weight:900
+}
+.off{
+  color:#4ade80;
+  font-weight:900;
+  font-size:13px
+}
+.price{
+  font-size:48px;
+  font-weight:900;
+  margin:10px 0
+}
+.old{
+  color:#666;
+  text-decoration:line-through;
+  font-size:16px;
+  margin-left:8px
+}
+.price small{
+  color:#888;
+  font-size:14px;
+  font-weight:500
+}
+.features{
+  list-style:none;
+  padding:0;
+  margin:25px 0
+}
+.features li{
+  padding:9px 0;
+  color:#bbb;
+  border-bottom:1px solid #18181e
+}
+.features li::before{
+  content:"✓";
+  color:#a855f7;
+  font-weight:900;
+  margin-right:10px
+}
+.full{width:100%}
+
+.steps{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:18px;
+  margin-top:45px
+}
+.step{
+  padding:25px;
+  border:1px solid #25252c;
+  border-radius:16px;
+  background:#0c0c10
+}
+.step b{
+  color:#a855f7;
+  font-size:24px
+}
+.step p{color:#888}
+
+.orderbox{
+  max-width:850px;
+  margin:auto;
+  padding:35px;
+  border:1px solid #292932;
+  border-radius:20px;
+  background:#0b0b0f
+}
+.form{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:16px
+}
+label{
+  color:#aaa;
+  font-size:13px;
+  font-weight:700
+}
+input,select,textarea{
+  display:block;
+  width:100%;
+  margin-top:7px;
+  padding:13px;
+  color:#fff;
+  background:#050507;
+  border:1px solid #292932;
+  border-radius:9px;
+  outline:none
+}
+input:focus,select:focus,textarea:focus{
+  border-color:#8b5cf6
+}
+.wide{grid-column:1/-1}
+
+.payment{
+  padding:18px;
+  margin:5px 0;
+  border:1px solid #292932;
+  border-radius:12px;
+  background:#08080b
+}
+.payment strong{color:#c084fc}
+
+.faq{
+  max-width:950px
+}
+details{
+  border-bottom:1px solid #292932;
+  padding:20px 0
+}
+summary{
+  cursor:pointer;
+  font-weight:800
+}
+details p{color:#888}
+
+.footer{
+  padding:45px 7%;
+  border-top:1px solid #202027;
+  color:#777;
+  display:flex;
+  justify-content:space-between;
+  flex-wrap:wrap;
+  gap:20px
+}
+
+@media(max-width:900px){
+  .navlinks{display:none}
+  .hero{
+    grid-template-columns:1fr;
+    padding-top:70px
+  }
+  .pricing{grid-template-columns:1fr}
+  .steps{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .section{padding:70px 5%}
+  .hero{padding:65px 5%}
+  .hero h1{font-size:48px}
+  .steps{grid-template-columns:1fr}
+  .form{grid-template-columns:1fr}
+  .wide{grid-column:auto}
+  .orderbox{padding:22px}
+  .navbtn{display:none}
+}
+</style></head><body><header class="nav">
+  <a class="logo" href="#home">◆ INDICATOR <b>STORE</b></a>  <nav class="navlinks">
+    <a href="#products">Pricing</a>
     <a href="#how">How it works</a>
     <a href="#order">Order</a>
-    <a href="#status">Order Status</a>
     <a href="#faq">FAQ</a>
-  </nav>
+  </nav><a class="navbtn" href="#products">Get Started</a>
 
-  <a class="buytop" href="#products">Buy Now</a>
-</header>
+</header><section class="hero" id="home">  <div>
+    <span class="badge">● PREMIUM TRADING TOOLS</span><h1>
+  Trade smarter.<br>
+  <span class="gradient">Build your edge.</span>
+</h1>
 
+<p>
+  Advanced charting tools, AI-powered strategy building,
+  alerts and research tools designed for serious traders.
+</p>
 
-<section id="home" class="hero">
+<div class="actions">
+  <a class="btn primary" href="#products">View Plans →</a>
+  <a class="btn" href="#how">How It Works</a>
+</div>
 
-  <div>
-    <div class="eyebrow">PREMIUM TRADING TOOLS</div>
+  </div>  <div class="chart">
+    <div class="charttop">
+      <span>INDICATOR STORE • MARKET</span>
+      <span class="live">● LIVE</span>
+    </div><div class="chartarea">
+  <svg class="chartline" viewBox="0 0 800 360" preserveAspectRatio="none">
+    <polyline
+      points="0,280 45,250 85,290 130,210 175,235 220,170 270,205 315,130 360,165 405,95 450,145 500,115 550,160 600,80 650,120 700,62 750,95 800,45"
+      fill="none"
+      stroke="#a855f7"
+      stroke-width="6"/>
+  </svg>
 
-    <h1>
-      Trade smarter.<br>
-      <span>Stay in control.</span>
-    </h1>
+  <span class="signal buy">BUY</span>
+  <span class="signal sell">SELL</span>
+</div>
 
-    <p>
-      Premium trading tools with simple ordering,
-      TradingView username submission and order tracking.
+  </div></section><section class="section" id="products">  <div class="center">
+    <div class="kicker">PRICING</div>
+    <h2>Simple pricing. Powerful tools.</h2>
+    <p class="muted">
+      Choose monthly access or save with annual billing.
     </p>
+  </div>  <div class="sale">
+    ⚡ <b>LIMITED TIME OFFER</b> —
+    Pay yearly to get the best deal!
+    &nbsp; <span id="countdown">02:15:50:37</span>
+  </div>  <div class="toggle">
+    <button id="monthlyBtn" class="active">Monthly</button>
+    <button id="annualBtn">Annual</button>
+  </div>  <div class="pricing"><article class="pricecard">
 
-    <div class="row">
-      <a class="btn primary" href="#products">Explore Plans →</a>
-      <a class="btn" href="#how">How It Works</a>
-    </div>
+  <div class="off">10% OFF</div>
 
-    <div class="mini">
-      ✓ Secure order flow　
-      ✓ Mobile friendly　
-      ✓ Fast support
-    </div>
+  <h3>Premium</h3>
+
+  <p class="muted">
+    Start trading with advanced charting tools + AI.
+  </p>
+
+  <div class="price">
+    <span id="premiumPrice">$61.19</span>
+    <small id="premiumPeriod">/mo</small>
+    <span class="old">$67.99</span>
   </div>
 
-  <div class="chartbox">
-    <div class="charttitle">
-      TRADINGVIEW STYLE
-      <span>● LIVE</span>
-    </div>
+  <ul class="features">
+    <li>Premium TradingView indicators & scanners</li>
+    <li>Advanced alert systems</li>
+    <li>Build indicators & strategies with AI</li>
+    <li>5,000 AI credits every month</li>
+    <li>Auto-debugging Pine Script® with Quant</li>
+    <li>Exclusive Discord community with alerts</li>
+  </ul>
 
-    <div class="chart">
-      <div class="grid"></div>
+  <button class="btn primary full choose" data-plan="Premium">
+    Get Premium
+  </button>
 
-      <svg viewBox="0 0 800 360" preserveAspectRatio="none">
-        <polyline
-          points="0,270 50,250 90,290 135,210 180,235 220,170 270,205 315,125 365,160 410,95 455,140 500,115 550,155 600,75 650,115 700,60 750,92 800,45"
-          fill="none"
-          stroke="#a958ff"
-          stroke-width="6"
-        />
-      </svg>
+</article>
 
-      <i class="sig buy">BUY</i>
-      <i class="sig sell">SELL</i>
-    </div>
+<article class="pricecard featured">
 
-    <div class="chartfoot">
-      Premium Signal <b>+24.8%</b>
-    </div>
+  <span class="popular">MOST POPULAR</span>
+
+  <div class="off">20% OFF</div>
+
+  <h3>Ultimate</h3>
+
+  <p class="muted">
+    Full AI trading capabilities for advanced edge building.
+  </p>
+
+  <div class="price">
+    <span id="ultimatePrice">$95.99</span>
+    <small id="ultimatePeriod">/mo</small>
+    <span class="old">$119.99</span>
   </div>
 
-</section>
+  <ul class="features">
+    <li>Everything in Premium</li>
+    <li>25,000 AI credits every month</li>
+    <li>AI automation capabilities</li>
+    <li>Auto-debugging Pine Script® with Quant</li>
+    <li>Create alerts from AI trading strategies</li>
+    <li>Auto-replicate AI strategies on TradingView</li>
+    <li>Strategy community with templates</li>
+  </ul>
 
+  <button class="btn primary full choose" data-plan="Ultimate">
+    Get Ultimate
+  </button>
 
-<section class="section" id="products">
+</article>
 
-  <div class="heading">
-    <div class="eyebrow">PRODUCTS</div>
-    <h2>Choose your plan</h2>
-    <p>Choose the plan that works best for you.</p>
-  </div>
-
-  <div class="products">
-
-    <article class="card">
-
-      <small>STARTER</small>
-
-      <h3>7 Days</h3>
-
-      <div class="price">$15</div>
-
-      <ul>
-        <li>Full indicator access</li>
-        <li>1 TradingView username</li>
-        <li>Standard support</li>
-      </ul>
-
-      <button
-        class="btn primary choose"
-        data-plan="7 Days">
-        Buy Now
-      </button>
-
-    </article>
-
-
-    <article class="card featured">
-
-      <b class="popular">MOST POPULAR</b>
-
-      <small>PRO</small>
-
-      <h3>30 Days</h3>
-
-      <div class="price">$39</div>
-
-      <ul>
-        <li>Full indicator access</li>
-        <li>1 TradingView username</li>
-        <li>Priority support</li>
-      </ul>
-
-      <button
-        class="btn primary choose"
-        data-plan="30 Days">
-        Buy Now
-      </button>
-
-    </article>
-
-  </div>
-</section>
-
-
-<section class="section dark" id="how">
-
-  <div class="heading">
-    <div class="eyebrow">PROCESS</div>
+  </div></section><section class="section" id="how">  <div class="center">
+    <div class="kicker">PROCESS</div>
     <h2>How it works</h2>
-  </div>
-
-  <div class="steps">
-
-    <div>
-      <b>01</b>
-      <h3>Choose Plan</h3>
-      <p>আপনার পছন্দের package নির্বাচন করুন।</p>
-    </div>
-
-    <div>
-      <b>02</b>
-      <h3>Pay</h3>
-      <p>Nagad দিয়ে payment করুন।</p>
-    </div>
-
-    <div>
-      <b>03</b>
-      <h3>Submit Details</h3>
-      <p>TradingView username এবং Transaction ID দিন।</p>
-    </div>
-
-    <div>
-      <b>04</b>
-      <h3>Activation</h3>
-      <p>Payment যাচাই করার পর order process করা হবে।</p>
-    </div>
-
-  </div>
-
-</section>
-
-
-<section class="section order" id="order">
-
-  <div class="heading">
-    <div class="eyebrow">ORDER</div>
-    <h2>Place your order</h2>
-  </div>
-
-
-  <form id="orderForm" class="form">
-
-    <label>
-      Full Name
-      <input id="name" required>
-    </label>
-
-
-    <label>
-      Email
-      <input id="email" type="email" required>
-    </label>
-
-
-    <label>
-      TradingView Username
-      <input id="tv" required>
-    </label>
-
-
-    <label>
-      Plan
-
-      <select id="plan" required>
-
-        <option value="">
-          Select plan
-        </option>
-
-        <option value="7 Days">
-          7 Days — $15
-        </option>
-
-        <option value="30 Days">
-          30 Days — $39
-        </option>
-
-      </select>
-
-    </label>
-
-
-    <label>
-      Payment Method
-
-      <select id="payment" required>
-
-        <option value="">
-          Select payment method
-        </option>
-
-        <option value="Nagad">
-          Nagad
-        </option>
-
-      </select>
-
-    </label>
-
-
-    <div
-      id="paymentInfo"
-      class="payment-info"
-      style="display:none;">
-
-      <strong>💳 Nagad Payment</strong>
-
-      <p>
-        এই নম্বরে Send Money করুন:
-      </p>
-
-      <div class="payment-number">
-        01759977759
-      </div>
-
-      <p>
-        Payment করার পর Transaction ID নিচের ঘরে দিন।
-      </p>
-
-    </div>
-
-
-    <label>
-      Transaction ID
-
-      <input
-        id="trx"
-        placeholder="Nagad Transaction ID"
-        required>
-
-    </label>
-
-
-    <label class="wide">
-      Message
-
-      <textarea
-        id="message"
-        rows="4">
-      </textarea>
-
-    </label>
-
-
-    <button
-      class="btn primary wide"
-      type="submit">
-
-      Submit Order →
-
-    </button>
-
-  </form>
-
-
-  <div id="orderResult"></div>
-
-</section>
-
-
-<section class="section status" id="status">
-
-  <div class="heading">
-    <div class="eyebrow">ORDER STATUS</div>
-    <h2>Track your order</h2>
-  </div>
-
-
-  <form
-    id="statusForm"
-    class="statusform">
-
-    <input
-      id="lookup"
-      placeholder="IS-12345678"
-      required>
-
-    <button
-      class="btn primary"
-      type="submit">
-
-      Check Status
-
-    </button>
-
-  </form>
-
-
-  <div id="statusResult"></div>
-
-</section>
-
-
-<section class="section faq" id="faq">
-
-  <div class="heading">
-    <div class="eyebrow">FAQ</div>
-    <h2>Frequently Asked Questions</h2>
-  </div>
-
-
-  <details>
-    <summary>
-      কেন TradingView username লাগবে?
-    </summary>
-
+  </div>  <div class="steps"><div class="step">
+  <b>01</b>
+  <h3>Choose Plan</h3>
+  <p>Select Premium or Ultimate and choose your billing period.</p>
+</div>
+
+<div class="step">
+  <b>02</b>
+  <h3>Pay</h3>
+  <p>Complete payment using the available payment method.</p>
+</div>
+
+<div class="step">
+  <b>03</b>
+  <h3>Submit Details</h3>
+  <p>Submit your TradingView username and transaction ID.</p>
+</div>
+
+<div class="step">
+  <b>04</b>
+  <h3>Activation</h3>
+  <p>Your payment is reviewed before activation.</p>
+</div>
+
+  </div></section><section class="section" id="order">  <div class="center">
+    <div class="kicker">ORDER</div>
+    <h2>Start your subscription</h2>
+    <p class="muted">Choose your plan and submit your payment details.</p>
+  </div>  <div class="orderbox"><div class="payment">
+  <strong>Payment</strong><br>
+  Available methods: Nagad + Binance Pay
+</div>
+
+<br>
+
+<form class="form" id="orderForm">
+
+  <label>
+    Full Name
+    <input id="name" required>
+  </label>
+
+  <label>
+    Email
+    <input id="email" type="email" required>
+  </label>
+
+  <label>
+    TradingView Username
+    <input id="tv" required>
+  </label>
+
+  <label>
+    Plan
+    <select id="plan" required>
+      <option value="">Select plan</option>
+      <option>Premium</option>
+      <option>Ultimate</option>
+    </select>
+  </label>
+
+  <label>
+    Billing
+    <select id="billing" required>
+      <option value="">Select billing</option>
+      <option>Monthly</option>
+      <option>Annual</option>
+    </select>
+  </label>
+
+  <label>
+    Payment Method
+    <select id="payment" required>
+      <option value="">Select payment</option>
+      <option>Nagad</option>
+      <option>Binance Pay</option>
+    </select>
+  </label>
+
+  <label>
+    Transaction ID
+    <input id="trx" required>
+  </label>
+
+  <label>
+    Message
+    <textarea id="message" rows="4"></textarea>
+  </label>
+
+  <button class="btn primary wide" type="submit">
+    Submit Order →
+  </button>
+
+</form>
+
+<div id="result"></div>
+
+  </div></section><section class="section faq" id="faq">  <div class="center">
+    <div class="kicker">FAQ</div>
+    <h2>Questions, answered.</h2>
+  </div>  <details>
+    <summary>Which plan should I choose?</summary>
     <p>
-      আপনার order process এবং authorized activation
-      workflow-এর জন্য TradingView username প্রয়োজন।
+      Premium is designed for traders who need the core indicator,
+      scanner, alert and AI features. Ultimate adds advanced AI
+      automation and strategy tools.
     </p>
-
-  </details>
-
-
-  <details>
-    <summary>
-      Payment করার পর কী হবে?
-    </summary>
-
+  </details>  <details>
+    <summary>What is the difference between Monthly and Annual?</summary>
     <p>
-      Payment করার পর order Pending থাকবে।
-      Payment যাচাই করার পর status update করা হবে।
+      Monthly billing provides monthly access. Annual billing is
+      designed for customers who want longer-term access at the
+      advertised annual price.
     </p>
-
-  </details>
-
-
-  <details>
-    <summary>
-      Payment কীভাবে করব?
-    </summary>
-
+  </details>  <details>
+    <summary>How does activation work?</summary>
     <p>
-      Nagad থেকে 01759977759 নম্বরে payment করুন।
-      এরপর Transaction ID দিয়ে order submit করুন।
+      After submitting an order, payment and transaction information
+      are reviewed before activation.
     </p>
+  </details>  <details>
+    <summary>Can I track my order?</summary>
+    <p>
+      Yes. Your order ID can be used with the order-status system
+      configured on the website.
+    </p>
+  </details></section><footer class="footer">
+  <div>◆ INDICATOR STORE</div>
+  <div>© 2026 Indicator Store. All rights reserved.</div>
+</footer><script>
 
-  </details>
+const monthlyBtn = document.getElementById("monthlyBtn");
+const annualBtn = document.getElementById("annualBtn");
 
-</section>
+const premiumPrice = document.getElementById("premiumPrice");
+const ultimatePrice = document.getElementById("ultimatePrice");
+
+const premiumPeriod = document.getElementById("premiumPeriod");
+const ultimatePeriod = document.getElementById("ultimatePeriod");
+
+monthlyBtn.onclick = () => {
+
+  monthlyBtn.classList.add("active");
+  annualBtn.classList.remove("active");
+
+  premiumPrice.textContent = "$61.19";
+  ultimatePrice.textContent = "$95.99";
+
+  premiumPeriod.textContent = "/mo";
+  ultimatePeriod.textContent = "/mo";
+
+};
+
+annualBtn.onclick = () => {
+
+  annualBtn.classList.add("active");
+  monthlyBtn.classList.remove("active");
+
+  /*
+    Annual prices can be changed here after
+    you decide the exact yearly prices.
+  */
+
+  premiumPrice.textContent = "$61.19";
+  ultimatePrice.textContent = "$95.99";
+
+  premiumPeriod.textContent = "/yr";
+  ultimatePeriod.textContent = "/yr";
+
+};
+
+document.querySelectorAll(".choose").forEach(button => {
+
+  button.addEventListener("click", () => {
+
+    document.getElementById("plan").value =
+      button.dataset.plan;
+
+    document.getElementById("order")
+      .scrollIntoView({behavior:"smooth"});
+
+  });
+
+});
 
 
-<footer>
-  ◆ INDICATOR STORE
-  <span>© 2026</span>
-</footer>
+/* Countdown */
+
+let seconds = 2*86400 + 15*3600 + 50*60 + 37;
+
+function countdown(){
+
+  if(seconds <= 0) return;
+
+  seconds--;
+
+  const d = Math.floor(seconds / 86400);
+  const h = Math.floor((seconds % 86400) / 3600);
+  const m = Math.floor((seconds % 3600) / 60);
+  const s = seconds % 60;
+
+  document.getElementById("countdown").textContent =
+    String(d).padStart(2,"0") + ":" +
+    String(h).padStart(2,"0") + ":" +
+    String(m).padStart(2,"0") + ":" +
+    String(s).padStart(2,"0");
+}
+
+setInterval(countdown,1000);
 
 
-<script src="app.js"></script>
+/* Order */
 
-</body>
+document.getElementById("orderForm").addEventListener("submit", async e => {
+
+  e.preventDefault();
+
+  const result = document.getElementById("result");
+
+  result.innerHTML =
+    "<p style='color:#c084fc'>Submitting order...</p>";
+
+  try{
+
+    const response = await fetch("/api/orders",{
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify({
+
+        name:document.getElementById("name").value,
+        email:document.getElementById("email").value,
+        tradingview_username:document.getElementById("tv").value,
+        plan:document.getElementById("plan").value,
+        billing:document.getElementById("billing").value,
+        payment_method:document.getElementById("payment").value,
+        transaction_id:document.getElementById("trx").value,
+        message:document.getElementById("message").value
+
+      })
+    });
+
+    const data = await response.json();
+
+    if(!response.ok){
+      throw new Error(data.error || "Order failed");
+    }
+
+    result.innerHTML =
+      "<div style='margin-top:20px;padding:18px;border:1px solid #263d2c;border-radius:10px;color:#4ade80'>" +
+      "<b>Order submitted successfully ✓</b><br>" +
+      "Order ID: " + data.order_id +
+      "</div>";
+
+    e.target.reset();
+
+  }catch(error){
+
+    result.innerHTML =
+      "<div style='margin-top:20px;padding:18px;border:1px solid #4b2525;border-radius:10px;color:#f87171'>" +
+      error.message +
+      "</div>";
+
+  }
+
+});
+
+</script></body>
 </html>
